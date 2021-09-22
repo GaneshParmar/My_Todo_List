@@ -59,12 +59,12 @@ function show_task_added(){
     console.log(Tomorrow_tasks);
     var Today_tasks=JSON.parse(localStorage.getItem("Today_Task_List"));
     console.log(Today_tasks);
-    var i,j;
-    for(i in Today_tasks ){
+    
+    for(var i=0;i<Today_tasks.length;i++){
         add_task("#todays_works",Today_tasks[i].task_name,Today_tasks[i].time_alloted);
     };
 
-    for(j in Tomorrow_tasks){
+    for(var j=0;j<Tomorrow_tasks.length;j++){
         add_task("#tomorrows_works",Tomorrow_tasks[j].task_name,Tomorrow_tasks[j].time_alloted);  
     };
 }
