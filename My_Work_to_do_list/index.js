@@ -33,9 +33,9 @@ function local_storage_create() {
         if(localStorage.getItem("Date")==null){
             localStorage.setItem("Date",JSON.stringify(date));
         }
-        else{
+        /*else{
             check_date_change();
-        }
+        }*/
         show_task_added();
     }
 }
