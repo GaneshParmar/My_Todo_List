@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My_Works_to_do</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+</head>
+<body>
+    <nav>
+    <h3>To do list..</h3>
+    <a href="#add_task">Add Tasks<img src="https://img.icons8.com/material-outlined/24/000000/plus--v2.png"/></a>
+    </nav>    
+    <div class="container">
+        <div class="today" id="Today">
+            <div class="gif_container" id="today_pic">
+                <div class="hanger">Today's Tasks</div>
+                <div class="date-time" id="todays_date">Friday,Sep 10</div>
+            </div>
+            <ul class="list_of_works" id="todays_works">
+                <!-- <li>
+                    <span class="cheeck_container">
+                        <input type="checkbox" name="task" id="task" value="done" onclick="new dash_the_task(this)"/>
+                        <span class="done_checkmark"></span>
+                    </span> 
+                    <label for="task"  id="task_name" class="">1 hour C++ Study</label>
+                    <p><img src="https://img.icons8.com/ios-glyphs/30/000000/time--v2.png" width="20" height="20"/>~4:00pm</p>
+                    <img src="https://img.icons8.com/color/48/000000/delete-forever.png" width="30" height="30"/>
+                </li>
+                <li>
+                    <span class="cheeck_container">
+                        <input type="checkbox" name="" id="task" value="done" onclick="new dash_the_task(this)" />
+                        <span class="done_checkmark"></span> 
+                    </span>
+                    <label for="" id="task_name" class="">1 hour C++ Study</label>
+                    <p><img src="https://img.icons8.com/ios-glyphs/30/000000/time--v2.png" width="20" height="20"/>~4:00pm</p>
+                    <img src="https://img.icons8.com/color/48/000000/delete-forever.png" width="30" height="30"/>
+                </li> -->
+            </ul>
+        </div>
+        <hr>
+        <div class="tomorrow" id="Tomorrow">
+            <div class="gif_container" id="tomorrow_pic">
+                <div class="hanger">Tomorrow's Tasks</div>
+                <div class="date-time" id="tomorrows_date">Saturday,Sep 11</div>
+            </div>
+            <ul class="list_of_works" id="tomorrows_works">
+                
+            </ul>
+        </div>
+    </div>
+    <div id="add_task">
+        <!-- <h4>Add Task In the Input Fields</h4> -->
+        <div class="add_task_container">
+            <label for="task_enter">Enter Task Name</label>
+            <input type="text" name="task_name" id="task_enter" placeholder="Eg.C++ study,." required><br>
+            <label for="time_">Enter the Time of Task</label>
+            <input type="time" name="time" id="time_" required>
+            <label for="day">Select Day</label>
+            <span>
+                <input type="radio" name="day_select" id="to" value="#todays_works">Today<br>
+                <input type="radio" name="day_select" id="tm" value="#tomorrows_works">Tommorrow
+            </span>
+            <input type="submit" value="Submit" id="submit" onclick="show_task()">
+        </div>  
+    </div>
+</body>
+<script src="index.js"></script>
+</html>
