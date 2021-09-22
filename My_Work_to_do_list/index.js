@@ -45,7 +45,7 @@ function local_storage_create() {
 function check_date_change () {
     if(JSON.parse(localStorage.getItem("Date"))!=date){
         console.log("Done!!:)");
-        // localStorage.setItem("Date",date);
+        localStorage.setItem("Date",JSON.stringify(date));
         var todays_works=localStorage.getItem("Tomorrow_Task_List");
         localStorage.setItem("Today_Task_List",todays_works);
         localStorage.setItem("Tomorrow_Task_List",JSON.stringify([]))
@@ -59,12 +59,13 @@ function show_task_added(){
     console.log(Tomorrow_tasks);
     var Today_tasks=JSON.parse(localStorage.getItem("Today_Task_List"));
     console.log(Today_tasks);
-    var i;
+    var i,j;
     for(i in Today_tasks ){
         add_task("#todays_works",Today_tasks[i].task_name,Today_tasks[i].time_alloted);
     };
-    for(i in Tomorrow_tasks){
-        add_task("#tomorrows_works",Tomorrow_tasks[i].task_name,Tomorrow_tasks[i].time_alloted);  
+
+    for(j in Tomorrow_tasks){
+        add_task("#tomorrows_works",Tomorrow_tasks[j].task_name,Tomorrow_tasks[j].time_alloted);  
     };
 }
 
