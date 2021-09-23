@@ -25,24 +25,25 @@ var tomorrow_task_list=[];
 
 // Local storage create
 function local_storage_create() {
-    if(localStorage.getItem("Today_Task_List")==null && localStorage.getItem("Tomorrow_Task_List"==null)){
-        localStorage.setItem("Today_Task_List","");
-        localStorage.setItem("Tomorrow_Task_List","");
+    if(localStorage.getItem("Today_Task_List")==null && localStorage.getItem("Tomorrow_Task_List")==null){
+        console.log("I am in!!")
+        localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
+        localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
     }
     else{
         if(localStorage.getItem("Date")==null){
             localStorage.setItem("Date",JSON.stringify(date));
         }
-        /*else{
+        else{
             check_date_change();
-        }*/
+        }
         show_task_added();
     }
 }
 
 
 // For swapping the tasks
-function check_date_change () {
+function check_date_change() {
     if(JSON.parse(localStorage.getItem("Date"))!=date){
         console.log("Done!!:)");
         localStorage.setItem("Date",JSON.stringify(date));
@@ -59,13 +60,14 @@ function show_task_added(){
     console.log(Tomorrow_tasks);
     var Today_tasks=JSON.parse(localStorage.getItem("Today_Task_List"));
     console.log(Today_tasks);
-    
-    for(var i=0;i<Today_tasks.length;i++){
+    var i;
+    for(i in Today_tasks ){
+        console.log(i);
         add_task("#todays_works",Today_tasks[i].task_name,Today_tasks[i].time_alloted);
     };
-
-    for(var j=0;j<Tomorrow_tasks.length;j++){
-        add_task("#tomorrows_works",Tomorrow_tasks[j].task_name,Tomorrow_tasks[j].time_alloted);  
+    for(i in Tomorrow_tasks){
+        console.log(i);
+        add_task("#tomorrows_works",Tomorrow_tasks[i].task_name,Tomorrow_tasks[i].time_alloted);  
     };
 }
 
@@ -90,17 +92,28 @@ function show_task() {
     var User_En_Task=document.querySelector("#task_enter").value;
     var User_En_Time=document.querySelector("#time_").value;
     var User_En_Day=document.querySelector("input[name='day_select']:checked").value;
+    if(localStorage.getItem("Today_Task_List")==null && localStorage.getItem("Tomorrow_Task_List"==null)){
+        localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
+        localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
+    }
+    else{
+        tomorrow_task_list=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
+        today_task_list=JSON.parse(localStorage.getItem("Today_Task_List"));
+    }
     var task = {
         task_name:`${User_En_Task}`,
         time_alloted:`${User_En_Time}`
     };
     if(User_En_Day=="#tomorrows_works"){
+        console.log("I am in Tomorrow");
         tomorrow_task_list.push(task);
     }
     else{
+        console.log("I am in Today");
         today_task_list.push(task);
     }
-    
+    console.log(today_task_list);
+    console.log(tomorrow_task_list);
     localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
     localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
 
