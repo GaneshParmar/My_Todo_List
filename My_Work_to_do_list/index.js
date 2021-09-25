@@ -1,4 +1,6 @@
 let date= new Date().getDate();
+var today_task_list=[];
+var tomorrow_task_list=[];
 function set_date_(today_id,tom_id) {
     let date= new Date();
 
@@ -16,17 +18,56 @@ function set_date_(today_id,tom_id) {
 function dash_the_task(element){
     // let a=prompt("Are You serious ?");
     var parent_ele=element.parentElement.parentElement;
+    var ul_id="#"+parent_ele.parentElement.id;
+    var select_ul=document.querySelectorAll(`${ul_id}`+" li");
+    let li_select=parent_ele;
+    // Get the index of the done task
+    var index;
+    for(var i=0;i<select_ul.length;i++){
+        if(li_select==select_ul[i]){
+            index=i;
+        }
+        else{
+            continue;
+        }
+    }
+
+    if (element.checked==true){
+        console.log("The element is checked");
+        if(ul_id=="#tomorrows_works"){
+            tomorrow_task_list=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
+            tomorrow_task_list[index].task_done=1;
+            localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
+        }
+        else{
+            today_task_list=JSON.parse(localStorage.getItem("Today_Task_List"));
+            today_task_list[index].task_done=1;
+            localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
+        }
+    }
+    else{
+        console.log("The element is not checked");
+        if(ul_id=="#tomorrows_works"){
+            tomorrow_task_list=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
+            tomorrow_task_list[index].task_done=0;
+            localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
+        }
+        else{
+            today_task_list=JSON.parse(localStorage.getItem("Today_Task_List"));
+            today_task_list[index].task_done=0;
+            localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
+        }
+    }    
     var task_name=parent_ele.querySelector("#task_name");
     task_name.classList.toggle("dashed");
 }
 
-var today_task_list=[];
-var tomorrow_task_list=[];
+
 
 // Local storage create
 function local_storage_create() {
+    // This is for the localstorage not set yet
     if(localStorage.getItem("Today_Task_List")==null && localStorage.getItem("Tomorrow_Task_List")==null){
-        console.log("I am in!!")
         localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
         localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
     }
@@ -45,7 +86,6 @@ function local_storage_create() {
 // For swapping the tasks
 function check_date_change() {
     if(JSON.parse(localStorage.getItem("Date"))!=date){
-        console.log("Done!!:)");
         localStorage.setItem("Date",JSON.stringify(date));
         var todays_works=localStorage.getItem("Tomorrow_Task_List");
         localStorage.setItem("Today_Task_List",todays_works);
@@ -54,26 +94,67 @@ function check_date_change() {
     }
 }
 
+// Function for ticking the input
+function tick_the_task(input_box) {
+    input_box.checked=true;
+}
+
+
+
+
+function Check_The_task_done() {
+    var Tomorrow_tasks=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
+    var Today_tasks=JSON.parse(localStorage.getItem("Today_Task_List"));
+
+    console.log("Tommorrow_tasks are ",Tomorrow_tasks);
+    console.log("Todays_tasks are ",Today_tasks);
+
+    for(i in Today_tasks){
+        console.log("The task no is ",i);
+        if(Today_tasks[i].task_done==1){
+            var li_list=document.querySelectorAll("#todays_works li");
+            var input_box=li_list[i].querySelector("#task");
+            tick_the_task(input_box);
+            dash_the_task(input_box);
+        }
+        else{
+            var li_list=document.querySelectorAll("#todays_works li");
+            var input_box=li_list[i].querySelector("#task");
+            input_box.checked=false;
+        }
+    };
+
+    for(i in Tomorrow_tasks){
+        if(Tomorrow_tasks[i].task_done==1){
+            var li_list=document.querySelectorAll("#tomorrows_works li");
+            var input_box=li_list[i].querySelector("#task");
+            tick_the_task(input_box);
+            dash_the_task(input_box);
+        }
+        else{
+            var li_list=document.querySelectorAll("#tomorrows_works li");
+            var input_box=li_list[i].querySelector("#task");
+            input_box.checked=false;
+        }
+    }  ;  
+}
+
+
 
 function show_task_added(){
     var Tomorrow_tasks=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
-    console.log(Tomorrow_tasks);
     var Today_tasks=JSON.parse(localStorage.getItem("Today_Task_List"));
-    console.log(Today_tasks);
     var i;
     for(i in Today_tasks ){
-        console.log(i);
         add_task("#todays_works",Today_tasks[i].task_name,Today_tasks[i].time_alloted);
     };
     for(i in Tomorrow_tasks){
-        console.log(i);
-        add_task("#tomorrows_works",Tomorrow_tasks[i].task_name,Tomorrow_tasks[i].time_alloted);  
+        add_task("#tomorrows_works",Tomorrow_tasks[i].task_name,Tomorrow_tasks[i].time_alloted);          
     };
 }
 
 // Function for adding the task
 function add_task(day,task,time) {
-    
     var li_box=document.querySelector(`${day}`);
     li_box.innerHTML+=('beforeend','<li>\
     <span class="cheeck_container">\
@@ -102,18 +183,15 @@ function show_task() {
     }
     var task = {
         task_name:`${User_En_Task}`,
-        time_alloted:`${User_En_Time}`
+        time_alloted:`${User_En_Time}`,
+        task_done:0
     };
     if(User_En_Day=="#tomorrows_works"){
-        console.log("I am in Tomorrow");
         tomorrow_task_list.push(task);
     }
     else{
-        console.log("I am in Today");
         today_task_list.push(task);
     }
-    console.log(today_task_list);
-    console.log(tomorrow_task_list);
     localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
     localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
 
@@ -127,6 +205,72 @@ function show_task() {
     }
 }
 
-
 set_date_("#todays_date","#tomorrows_date");
 local_storage_create();
+Check_The_task_done();
+
+// For random Gif generator
+
+$(document).ready(function() {
+	// Initiate gifLoop for set interval
+	var refresh;
+	// Duration count in seconds
+	// const duration = 1000 * 10;
+	// Giphy API defaults
+	const giphy = {
+		baseURL: "https://api.giphy.com/v1/gifs/",
+		apiKey: "0UTRbFtkMxAplrohufYco5IY74U8hOes",
+		tag: "congratulation",
+		type: "random",
+		rating: "pg-13"
+	};
+	// Target gif-wrap container
+	const $gif_wrap = $("#gif_show");
+	// Giphy API URL
+	let giphyURL = encodeURI(
+		giphy.baseURL +
+			giphy.type +
+			"?api_key=" +
+			giphy.apiKey +
+			"&tag=" +
+			giphy.tag +
+			"&rating=" +
+			giphy.rating
+	);
+
+	// Call Giphy API and render data
+	var newGif = () => $.getJSON(giphyURL, json => renderGif(json.data));
+
+	// Display Gif in gif wrap container
+	var renderGif = _giphy => {
+        console.log("Hello");
+		console.log(_giphy);
+		// Set gif as bg image
+        console.log($gif_wrap);
+		$gif_wrap.css({
+			"background-image": 'url("' + _giphy.image_original_url + '")'
+		});
+
+		// Start duration countdown
+		// refreshRate();
+	};
+
+	// Call for new gif after duration
+	// var refreshRate = () => {
+	// 	// Reset set intervals
+	// 	clearInterval(refresh);
+	// 	refresh = setInterval(function() {
+	// 		// Call Giphy API for new gif
+	// 		newGif();
+	// 	}, duration);
+	// };
+
+	// Call Giphy API for new gif
+	newGif();
+	
+	
+	// const newGifButton = $('#new-gif');
+	
+	// newGifButton.click(newGif)
+});
+
