@@ -348,6 +348,7 @@ ul{
 @media (max-width:700px) {
    /* For Congratulation */
     .congrats_container{
+          display:none;
         /* position: absolute; */
         position: fixed;
         top: 50%;
