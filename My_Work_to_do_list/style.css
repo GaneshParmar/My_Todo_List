@@ -12,6 +12,7 @@
 }
 /* For Congratulation */
 .congrats_container{
+    display:none;
     position: absolute;
     top: 20%;
     /* display: flex; */
