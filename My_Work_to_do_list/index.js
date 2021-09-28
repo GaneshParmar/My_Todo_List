@@ -7,7 +7,7 @@ var tomorrow_task_list=[];
 
 var api="https://api.giphy.com/v1/gifs/random?";
 var apikey="api_key=0UTRbFtkMxAplrohufYco5IY74U8hOes";
-var tag="&tag=hurray&rating=pg-13";
+var tag="&tag=congratulations&rating=pg-13";
 
 
 function Get(yourUrl){
