@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="style.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script> -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 </head>
 <body>
@@ -20,34 +21,17 @@
         <div class="today" id="Today">
             <div class="gif_container" id="today_pic">
                 <div class="hanger">Today's Tasks</div>
-                <div class="date-time" id="todays_date">Friday,Sep 10</div>
+                <div class="date-time" id="todays_date"></div>
             </div>
             <ul class="list_of_works" id="todays_works">
-                <!-- <li>
-                    <span class="cheeck_container">
-                        <input type="checkbox" name="task" id="task" value="done" onclick="new dash_the_task(this)"/>
-                        <span class="done_checkmark"></span>
-                    </span> 
-                    <label for="task"  id="task_name" class="">1 hour C++ Study</label>
-                    <p><img src="https://img.icons8.com/ios-glyphs/30/000000/time--v2.png" width="20" height="20"/>~4:00pm</p>
-                    <img src="https://img.icons8.com/color/48/000000/delete-forever.png" width="30" height="30"/>
-                </li>
-                <li>
-                    <span class="cheeck_container">
-                        <input type="checkbox" name="" id="task" value="done" onclick="new dash_the_task(this)" />
-                        <span class="done_checkmark"></span> 
-                    </span>
-                    <label for="" id="task_name" class="">1 hour C++ Study</label>
-                    <p><img src="https://img.icons8.com/ios-glyphs/30/000000/time--v2.png" width="20" height="20"/>~4:00pm</p>
-                    <img src="https://img.icons8.com/color/48/000000/delete-forever.png" width="30" height="30"/>
-                </li> -->
+                
             </ul>
         </div>
         <hr>
         <div class="tomorrow" id="Tomorrow">
             <div class="gif_container" id="tomorrow_pic">
                 <div class="hanger">Tomorrow's Tasks</div>
-                <div class="date-time" id="tomorrows_date">Saturday,Sep 11</div>
+                <div class="date-time" id="tomorrows_date"></div>
             </div>
             <ul class="list_of_works" id="tomorrows_works">
                 
@@ -72,11 +56,11 @@
     <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
 
     <!-- Contratulation Message For Task Complete-->
-        <div class="congrats_container bg-light">
+        <div class="congrats_container bg-light" id="congrats_greeter">
             <div class="gif" id="gif_show"></div>
             <div class="message">
-                <h4 id="msg">Congratulations To you for task Completion</h4>
-                <button id="btn">Continue</button>
+                <h4 id="msg" class="test">Congratulations To you for task Completion</h4>
+                <button id="btn" onclick="close_Congrats()">Lets Go For Next Task Yey!</button>
             </div>
         </div>
 

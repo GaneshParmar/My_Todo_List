@@ -1,6 +1,35 @@
+
 let date= new Date().getDate();
 var today_task_list=[];
 var tomorrow_task_list=[];
+
+// For random Gif generator
+
+var api="https://api.giphy.com/v1/gifs/random?";
+var apikey="api_key=0UTRbFtkMxAplrohufYco5IY74U8hOes";
+var tag="&tag=hurray&rating=pg-13";
+
+
+function Get(yourUrl){
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",yourUrl,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;          
+}
+
+var url=api+apikey+tag;
+
+function showCongratulation() {
+    var data =JSON.parse(Get(url));
+    document.querySelector("#congrats_greeter").style.display="block";
+    var gif_url=data.data.images.original.url;    
+    document.querySelector("#gif_show").style.background="url("+gif_url+") no-repeat center";
+}
+function close_Congrats() {
+    document.querySelector("#congrats_greeter").style.display="none";
+}
+
+
 function set_date_(today_id,tom_id) {
     let date= new Date();
 
@@ -17,10 +46,14 @@ function set_date_(today_id,tom_id) {
 // let  temp=0;
 function dash_the_task(element){
     // let a=prompt("Are You serious ?");
+    // var input_checkmark=element.id;
+    element.disabled=true;
+    // document.getElementById().disabled = true;
     var parent_ele=element.parentElement.parentElement;
     var ul_id="#"+parent_ele.parentElement.id;
     var select_ul=document.querySelectorAll(`${ul_id}`+" li");
     let li_select=parent_ele;
+    // document.getElementById(li_select.id).style.opacity=0.4;
     // Get the index of the done task
     var index;
     for(var i=0;i<select_ul.length;i++){
@@ -44,22 +77,10 @@ function dash_the_task(element){
             today_task_list[index].task_done=1;
             localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
         }
-    }
-    else{
-        console.log("The element is not checked");
-        if(ul_id=="#tomorrows_works"){
-            tomorrow_task_list=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
-            tomorrow_task_list[index].task_done=0;
-            localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
-        }
-        else{
-            today_task_list=JSON.parse(localStorage.getItem("Today_Task_List"));
-            today_task_list[index].task_done=0;
-            localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
-        }
-    }    
+    }  
     var task_name=parent_ele.querySelector("#task_name");
     task_name.classList.toggle("dashed");
+
 }
 
 
@@ -158,12 +179,12 @@ function add_task(day,task,time) {
     var li_box=document.querySelector(`${day}`);
     li_box.innerHTML+=('beforeend','<li>\
     <span class="cheeck_container">\
-        <input type="checkbox" name="task" id="task" value="done" onclick="new dash_the_task(this)"/>\
+        <input type="checkbox" name="task" id="task" value="done" onclick="dash_the_task(this);showCongratulation();"/>\
         <span class="done_checkmark"></span>\
     </span> \
     <label  id="task_name" class="">'+`${task}`+'</label>\
     <p><img src="https://img.icons8.com/ios-glyphs/30/000000/time--v2.png" width="20" height="20"/>~'+`${time}`+'</p>\
-    <img src="https://img.icons8.com/color/48/000000/delete-forever.png" width="30" height="30"/>\
+    <img src="https://img.icons8.com/color/48/000000/delete-forever.png" onclick="delete_task(this)" width="30" height="30"/>\
     </li>');
 }
 
@@ -203,74 +224,89 @@ function show_task() {
         // today_work_li.insertAdjacentHTML(3,task_li)
         add_task(User_En_Day,User_En_Task,User_En_Time);
     }
+    location.reload();
 }
+
+
+function delete_task(element){
+    // document.getElementById().disabled = true;
+    var parent_ele=element.parentElement;
+    var ul_id="#"+parent_ele.parentElement.id;
+    var select_ul=document.querySelectorAll(`${ul_id}`+" li");
+    let li_select=parent_ele;
+    // document.getElementById(li_select.id).style.opacity=0.4;
+    // Get the index of the done task
+    var index=0;
+    
+    document.getElementById("todays_works").innerHTML=" ";
+    document.getElementById("tomorrows_works").innerHTML=" ";
+
+    var temp_today=JSON.parse(localStorage.getItem("Today_Task_List"));
+    var temp_tom=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
+
+    var today_task_after_del=[];
+    var tom_task_after_del=[];
+
+
+    if(ul_id=="#todays_works"){
+        for(var i=0;i<select_ul.length;i++){
+            if(li_select==select_ul[i]){
+                continue;
+            }
+            else{
+                today_task_after_del.push(temp_today[i]);
+            }
+        }
+        localStorage.setItem("Today_Task_List",JSON.stringify(today_task_after_del));
+        show_task_added();
+    }
+    else{
+        for(var i=0;i<select_ul.length;i++){
+            if(li_select==select_ul[i]){
+                continue;
+            }
+            else{
+                tom_task_after_del.push(temp_tom[i]);
+            }
+
+        } 
+        localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tom_task_after_del));       
+        show_task_added();
+    }
+    Check_The_task_done();
+    
+
+
+
+    // if(ul_id=="#tomorrows_works"){
+    //     var tomorrow_task_li=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
+    //     if(index==0){
+    //         tomorrow_task_li.shift();
+    //     }
+    //     else{
+    //         tomorrow_task_li.splice(index,index);
+    //         console.log(tomorrow_task_list);
+    //     }
+    //     localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_li));
+    //     // show_task_added();
+    // }
+    // else{
+    //     var today_task_li=JSON.parse(localStorage.getItem("Today_Task_List"));
+    //     if(index==0){
+    //         today_task_li.shift();
+    //     }
+    //     else{
+    //         today_task_li.splice(index,index);
+    //         console.log(today_task_li);
+    //     }        
+    //     localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
+    //     // show_task_added();
+    // }
+    
+}
+
 
 set_date_("#todays_date","#tomorrows_date");
 local_storage_create();
 Check_The_task_done();
-
-// For random Gif generator
-
-$(document).ready(function() {
-	// Initiate gifLoop for set interval
-	var refresh;
-	// Duration count in seconds
-	// const duration = 1000 * 10;
-	// Giphy API defaults
-	const giphy = {
-		baseURL: "https://api.giphy.com/v1/gifs/",
-		apiKey: "0UTRbFtkMxAplrohufYco5IY74U8hOes",
-		tag: "congratulation",
-		type: "random",
-		rating: "pg-13"
-	};
-	// Target gif-wrap container
-	const $gif_wrap = $("#gif_show");
-	// Giphy API URL
-	let giphyURL = encodeURI(
-		giphy.baseURL +
-			giphy.type +
-			"?api_key=" +
-			giphy.apiKey +
-			"&tag=" +
-			giphy.tag +
-			"&rating=" +
-			giphy.rating
-	);
-
-	// Call Giphy API and render data
-	var newGif = () => $.getJSON(giphyURL, json => renderGif(json.data));
-
-	// Display Gif in gif wrap container
-	var renderGif = _giphy => {
-        console.log("Hello");
-		console.log(_giphy);
-		// Set gif as bg image
-        console.log($gif_wrap);
-		$gif_wrap.css({
-			"background-image": 'url("' + _giphy.image_original_url + '")'
-		});
-
-		// Start duration countdown
-		// refreshRate();
-	};
-
-	// Call for new gif after duration
-	// var refreshRate = () => {
-	// 	// Reset set intervals
-	// 	clearInterval(refresh);
-	// 	refresh = setInterval(function() {
-	// 		// Call Giphy API for new gif
-	// 		newGif();
-	// 	}, duration);
-	// };
-
-	// Call Giphy API for new gif
-	newGif();
-	
-	
-	// const newGifButton = $('#new-gif');
-	
-	// newGifButton.click(newGif)
-});
 

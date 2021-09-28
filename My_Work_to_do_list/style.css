@@ -3,8 +3,8 @@
     padding:0;
     box-sizing: border-box;
     scroll-behavior: smooth;
+    transition: 0.4s all ease;
 }
-
 /* Special Classes */
 .dashed{
     text-decoration: line-through;
@@ -12,24 +12,31 @@
 }
 /* For Congratulation */
 .congrats_container{
-    display:none;
-    position: absolute;
-    top: 20%;
+    /* position: absolute; */
+    display: none;
+    opacity: 0;
+    position: fixed;
+    top: 50%;
     /* display: flex; */
     /* flex-direction: column; */
-    width: 50%;
-    height: 30%;
+    width: 90%;
+    height: 80%;
     /* grid-template-rows: 4fr 2fr; */
     /* top: 50%;
     left: 50%; */
     transform: translate(-50%,-50%);
+    background-color: white;
     border: 1px solid white;
-    box-shadow: 0px 0px 10px gray;
+    border-radius: 10px;
+    box-shadow: 0px 1px 100px rgb(0, 0, 0);
+    /* background-color: white; */
     z-index: 10;
+    animation: show 0.5s forwards;
+    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
 }
 .congrats_container>.gif{
-    /* display: block;
-    position: absolute; */
+    display: block;
+    position: absolute;
     width: 100%;
     height: 60%;
     top: 0;
@@ -39,10 +46,25 @@
 }
 .congrats_container>.message{
     position: absolute;
+    text-align: center;
+    font-family: sans-serif;
     bottom: 0;
-    background-color: green;
+    /* background: url(/done.png); */
     width: 100%;
     height: 40%;
+    padding: 10% 0%;
+} 
+.congrats_container>.message>#msg{
+    margin-bottom: 40px;
+    font-size: 1.6em;
+}
+.congrats_container>.message>#btn{
+    width: 100%;
+    padding: 14px 0px;
+    color: white;
+    background-color: #e8676f;
+    border: none;
+    /* border-radius: 60px; */
 }
 /*  */
 body{
@@ -63,13 +85,20 @@ body{
 }
 nav{
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    /* justify-content: space-around; */
     width: 100%;
     background-color: rgba(0, 0, 0, 0.164);
     padding: 10px 4px;
 }
+nav>h3{
+    text-align: center;
+}
 nav>a{
     display: flex;
+    width: 100%;
+    justify-content: center;
     align-items: center;
     text-decoration: none;
     background-color: aqua;
@@ -344,51 +373,22 @@ ul{
     }
 }
 
+/* Animations Here */
 
-@media (max-width:700px) {
-   /* For Congratulation */
-    .congrats_container{
-          display:none;
-        /* position: absolute; */
-        position: fixed;
-        top: 50%;
-        /* display: flex; */
-        /* flex-direction: column; */
-        width: 90%;
-        height: 90%;
-        /* grid-template-rows: 4fr 2fr; */
-        /* top: 50%;
-        left: 50%; */
-        transform: translate(-50%,-50%);
-        border: 1px solid white;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgb(187, 187, 187);
-        background-color: white;
-        z-index: 10;
+@keyframes show {
+    0%{
+        opacity: 0;
     }
-    /* .congrats_container>.gif{
-        /* display: block;
-        position: absolute; */
-        /*width: 100%;
-        height: 60%;
-        top: 0;
-        background-color: green;
-        background: no-repeat 100%;
-        background-position: center;
-    }*/
-    .congrats_container>.message{
-        position: absolute;
-        text-align: center;
-        bottom: 0;
-        background-color: white;
-        width: 100%;
-        height: 40%;
-        padding: 10% 0%;
-    } 
-    .congrats_container>.message>#msg{
-        margin-bottom: 40px;
+    50%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 1;
     }
 }
+
+
+
 
 /* @media (max-width:700px) {
     #add_task>.add_task_container{
