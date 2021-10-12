@@ -24,7 +24,24 @@
                 <div class="date-time" id="todays_date"></div>
             </div>
             <ul class="list_of_works" id="todays_works">
-                
+                <li>
+                    <span class="cheeck_container">
+                        <input type="checkbox" name="task" id="task" value="done" onclick="dash_the_task(this);showCongratulation();"/>
+                        <span class="done_checkmark"></span>
+                    </span> 
+                    <label  id="task_name" class="">Get Up Early</label>
+                     <p><img src="https://img.icons8.com/ios-glyphs/30/000000/time--v2.png" width="20" height="20"/>~05:00</p>
+                     <img src="https://img.icons8.com/color/48/000000/delete-forever.png" onclick="delete_task(this)" width="30" height="30"/>
+                </li>
+                <li>
+                    <span class="cheeck_container">
+                        <input type="checkbox" name="task" id="task" value="done" onclick="dash_the_task(this);showCongratulation();"/>
+                        <span class="done_checkmark"></span>
+                    </span> 
+                    <label  id="task_name" class="">Do Yoga</label>
+                     <p><img src="https://img.icons8.com/ios-glyphs/30/000000/time--v2.png" width="20" height="20"/>~05:30</p>
+                     <img src="https://img.icons8.com/color/48/000000/delete-forever.png" onclick="delete_task(this)" width="30" height="30"/>
+                </li>
             </ul>
         </div>
         <hr>
