@@ -110,7 +110,7 @@ function check_date_change() {
         localStorage.setItem("Date",JSON.stringify(date));
         var todays_works=localStorage.getItem("Tomorrow_Task_List");
         localStorage.setItem("Today_Task_List",todays_works);
-        localStorage.setItem("Tomorrow_Task_List",JSON.stringify([]))
+        localStorage.setItem("Tomorrow_Task_List",JSON.stringify([{task_name: 'Get UP Early', time_alloted: '05:00', task_done: 0},{task_name: 'Do Yoga', time_alloted: '05:30', task_done: 0}]));
         // show_task_added();
     }
 }
