@@ -1,6 +1,6 @@
 
 let date= new Date().getDate();
-var today_task_list=[ {task_name: 'Get Up Early', time_alloted: '05:00', task_done: 0},{task_name: 'Do Yoga', time_alloted: '05:30', task_done: 0}];
+var today_task_list=[];
 var tomorrow_task_list=[];
 
 // For random Gif generator
