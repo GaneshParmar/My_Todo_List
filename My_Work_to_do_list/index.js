@@ -338,8 +338,8 @@ function show_form(btn,text,ele) {
     }
 }
 
-localStorage.removeItem("Today_Task_List");
-localStorage.removeItem("Tomorrow_Task_List");
+//localStorage.removeItem("Today_Task_List");
+//localStorage.removeItem("Tomorrow_Task_List");
 local_storage_create();
 set_date_("#todays_date","#tomorrows_date");
 Check_The_task_done();
