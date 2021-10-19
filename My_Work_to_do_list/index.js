@@ -1,7 +1,7 @@
 
 let date= new Date().getDate();
 var today_task_list=[];
-var tomorrow_task_list=[];
+var tomorrow_task_list=[{task_name: 'Get Up Early', task_done: 0},{task_name: 'Do Yoga', task_done: 0}];
 
 // For random Gif generator
 
@@ -85,7 +85,6 @@ function dash_the_task(element){
         if(ul_id=="#tomorrows_works"){
             tomorrow_task_list=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
             tomorrow_task_list[index].task_done=1;
-            console.log(tomorrow_task_list);
             localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
         }
         else{
@@ -339,8 +338,9 @@ function show_form(btn,text,ele) {
     }
 }
 
-
-set_date_("#todays_date","#tomorrows_date");
+localStorage.removeItem("Today_Task_List");
+localStorage.removeItem("Tomorrow_Task_List");
 local_storage_create();
+set_date_("#todays_date","#tomorrows_date");
 Check_The_task_done();
 
