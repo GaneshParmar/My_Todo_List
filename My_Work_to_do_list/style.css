@@ -186,6 +186,7 @@ ul>li{
 li>label{
     position: relative;
     width: 50%;
+    font-family: 'Patrick Hand', cursive !important; 
     /* background-color: #61045f; */
     /* width: 20px;
     height: 20px; */
