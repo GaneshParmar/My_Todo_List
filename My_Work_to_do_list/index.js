@@ -19,11 +19,14 @@ function Get(yourUrl){
 
 var url=api+apikey+tag;
 
-function showCongratulation() {
-    var data =JSON.parse(Get(url));
-    document.querySelector("#congrats_greeter").style.display="block";
-    var gif_url=data.data.images.original.url;    
-    document.querySelector("#gif_show").style.background="url("+gif_url+") no-repeat center";
+function showCongratulation(ele) {
+    var input_chk_box=ele.querySelector("#task");
+    if(input_chk_box.disabled!=true){
+        var data =JSON.parse(Get(url));
+        document.querySelector("#congrats_greeter").style.display="block";
+        var gif_url=data.data.images.original.url;    
+        document.querySelector("#gif_show").style.background="url("+gif_url+") no-repeat center";
+    } 
 }
 function close_Congrats() {
     document.querySelector("#congrats_greeter").style.display="none";
@@ -47,13 +50,25 @@ function set_date_(today_id,tom_id) {
 function dash_the_task(element){
     // let a=prompt("Are You serious ?");
     // var input_checkmark=element.id;
-    element.disabled=true;
+    // element.disabled=true;
     // document.getElementById().disabled = true;
-    var parent_ele=element.parentElement.parentElement;
-    var ul_id="#"+parent_ele.parentElement.id;
+    let li_select=element;
+    // var parent_ele=element.parentElement.parentElement;
+    var ul_id="#"+li_select.parentElement.id;
+    console.log(ul_id);
     var select_ul=document.querySelectorAll(`${ul_id}`+" li");
-    let li_select=parent_ele;
-    li_select.classList+="animation";
+    
+    // Disable the checkbox
+    var input_chk_box=li_select.querySelector("#task");
+    if(input_chk_box.disabled!=true){
+        input_chk_box.checked=true;
+        input_chk_box.disabled=true;
+        var task_name=li_select.querySelector("#task_name");
+        // task_name.style.color="rgba(0, 0, 0, 0.2) !important";
+        task_name.classList.toggle("dashed");
+        li_select.classList+="animation";
+    }
+    
     // document.getElementById(li_select.id).style.opacity=0.4;
     // Get the index of the done task
     var index;
@@ -65,11 +80,12 @@ function dash_the_task(element){
             continue;
         }
     }
-
-    if (element.checked==true){
+    console.log(index);
+    if (input_chk_box.checked==true){
         if(ul_id=="#tomorrows_works"){
             tomorrow_task_list=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
             tomorrow_task_list[index].task_done=1;
+            console.log(tomorrow_task_list);
             localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
         }
         else{
@@ -78,9 +94,7 @@ function dash_the_task(element){
             localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
         }
     }  
-    var task_name=parent_ele.querySelector("#task_name");
-    task_name.style.color="rgba(0, 0, 0, 0.2) !important";
-    task_name.classList.toggle("dashed");
+    
 
 }
 
@@ -137,7 +151,7 @@ function Check_The_task_done() {
             var li_list=document.querySelectorAll("#todays_works li");
             var input_box=li_list[i].querySelector("#task");
             tick_the_task(input_box);
-            dash_the_task(input_box);
+            dash_the_task(li_list[i]);
         }
         else{
             var li_list=document.querySelectorAll("#todays_works li");
@@ -151,7 +165,7 @@ function Check_The_task_done() {
             var li_list=document.querySelectorAll("#tomorrows_works li");
             var input_box=li_list[i].querySelector("#task");
             tick_the_task(input_box);
-            dash_the_task(input_box);
+            dash_the_task(li_list[i]);
         }
         else{
             var li_list=document.querySelectorAll("#tomorrows_works li");
@@ -178,9 +192,9 @@ function show_task_added(){
 // Function for adding the task
 function add_task(day,task) {
     var li_box=document.querySelector(`${day}`);
-    li_box.innerHTML+=('beforeend','<li>\
+    li_box.innerHTML+=('beforeend','<li onclick="showCongratulation(this);dash_the_task(this);">\
     <span class="cheeck_container">\
-        <input type="checkbox" name="task" id="task" value="done" onclick="showCongratulation();dash_the_task(this);"/>\
+        <input type="checkbox" name="task" id="task" value="done" "/>\
         <span class="done_checkmark"></span>\
     </span> \
     <label  id="task_name" class="">'+`${task}`+'</label>\
