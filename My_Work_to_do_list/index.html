@@ -13,9 +13,12 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 </head>
 <body>
+
+    <div id="blurr_bg"></div>
+
     <nav>
-    <h3>To do list..</h3>
-    <a href="#add_task">Add Tasks<img src="https://img.icons8.com/material-outlined/24/000000/plus--v2.png"/></a>
+    <h1>All Tasks</h1>
+    <!-- <a href="#add_task">Add Tasks<img src="https://img.icons8.com/material-outlined/24/000000/plus--v2.png"/></a> -->
     </nav>    
     <div class="container">
         <div class="today" id="Today">
@@ -24,7 +27,7 @@
                 <div class="date-time" id="todays_date"></div>
             </div>
             <ul class="list_of_works" id="todays_works">
-             
+                
             </ul>
         </div>
         <hr>
@@ -37,18 +40,19 @@
                 
             </ul>
         </div>
+        <div class="add_task" onclick="show_form(this,'inner_text','add_task')"><span id="inner_text">+</span></div>
     </div>
-    <div id="add_task">
+    <div id="add_task" class="hide">
         <!-- <h4>Add Task In the Input Fields</h4> -->
         <div class="add_task_container">
             <label for="task_enter">Enter Task Name</label>
             <input type="text" name="task_name" id="task_enter" placeholder="Eg.C++ study,." required><br>
-            <label for="time_">Enter the Time of Task</label>
-            <input type="time" name="time" id="time_" required>
+            <!-- <label for="time_">Enter the Time of Task</label>
+            <input type="time" name="time" id="time_" required> -->
             <label for="day">Select Day</label>
             <span>
-                <input type="radio" name="day_select" id="to" value="#todays_works">Today<br>
-                <input type="radio" name="day_select" id="tm" value="#tomorrows_works">Tommorrow
+                <input type="radio" name="day_select" id="to" value="#todays_works"> <label for="to">Today</label><br>
+                <input type="radio" name="day_select" id="tm" value="#tomorrows_works"><label for="tm">Tommorrow</label>
             </span>
             <input type="submit" value="Submit" id="submit" onclick="show_task()">
         </div>  

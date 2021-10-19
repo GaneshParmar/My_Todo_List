@@ -7,7 +7,7 @@ var tomorrow_task_list=[];
 
 var api="https://api.giphy.com/v1/gifs/random?";
 var apikey="api_key=0UTRbFtkMxAplrohufYco5IY74U8hOes";
-var tag="&tag=congratulations&rating=pg-13";
+var tag="&tag=hurray&rating=pg-13";
 
 
 function Get(yourUrl){
@@ -53,6 +53,7 @@ function dash_the_task(element){
     var ul_id="#"+parent_ele.parentElement.id;
     var select_ul=document.querySelectorAll(`${ul_id}`+" li");
     let li_select=parent_ele;
+    li_select.classList+="animation";
     // document.getElementById(li_select.id).style.opacity=0.4;
     // Get the index of the done task
     var index;
@@ -66,7 +67,6 @@ function dash_the_task(element){
     }
 
     if (element.checked==true){
-        console.log("The element is checked");
         if(ul_id=="#tomorrows_works"){
             tomorrow_task_list=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
             tomorrow_task_list[index].task_done=1;
@@ -79,6 +79,7 @@ function dash_the_task(element){
         }
     }  
     var task_name=parent_ele.querySelector("#task_name");
+    task_name.style.color="rgba(0, 0, 0, 0.2) !important";
     task_name.classList.toggle("dashed");
 
 }
@@ -110,7 +111,7 @@ function check_date_change() {
         localStorage.setItem("Date",JSON.stringify(date));
         var todays_works=localStorage.getItem("Tomorrow_Task_List");
         localStorage.setItem("Today_Task_List",todays_works);
-        localStorage.setItem("Tomorrow_Task_List",JSON.stringify([{task_name: 'Get UP Early', time_alloted: '05:00', task_done: 0},{task_name: 'Do Yoga', time_alloted: '05:30', task_done: 0}]));
+        localStorage.setItem("Tomorrow_Task_List",JSON.stringify([]))
         // show_task_added();
     }
 }
@@ -175,15 +176,14 @@ function show_task_added(){
 }
 
 // Function for adding the task
-function add_task(day,task,time) {
+function add_task(day,task) {
     var li_box=document.querySelector(`${day}`);
     li_box.innerHTML+=('beforeend','<li>\
     <span class="cheeck_container">\
-        <input type="checkbox" name="task" id="task" value="done" onclick="dash_the_task(this);showCongratulation();"/>\
+        <input type="checkbox" name="task" id="task" value="done" onclick="showCongratulation();dash_the_task(this);"/>\
         <span class="done_checkmark"></span>\
     </span> \
     <label  id="task_name" class="">'+`${task}`+'</label>\
-    <p><img src="https://img.icons8.com/ios-glyphs/30/000000/time--v2.png" width="20" height="20"/>~'+`${time}`+'</p>\
     <img src="https://img.icons8.com/color/48/000000/delete-forever.png" onclick="delete_task(this)" width="30" height="30"/>\
     </li>');
 }
@@ -192,7 +192,7 @@ function add_task(day,task,time) {
 function show_task() {
     // var today_work_li=document.querySelector("#today_works");
     var User_En_Task=document.querySelector("#task_enter").value;
-    var User_En_Time=document.querySelector("#time_").value;
+    // var User_En_Time=document.querySelector("#time_").value;
     var User_En_Day=document.querySelector("input[name='day_select']:checked").value;
     if(localStorage.getItem("Today_Task_List")==null && localStorage.getItem("Tomorrow_Task_List"==null)){
         localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
@@ -204,7 +204,7 @@ function show_task() {
     }
     var task = {
         task_name:`${User_En_Task}`,
-        time_alloted:`${User_En_Time}`,
+        // time_alloted:`${User_En_Time}`,
         task_done:0
     };
     if(User_En_Day=="#tomorrows_works"){
@@ -216,13 +216,13 @@ function show_task() {
     localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
     localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
 
-    if(User_En_Task=="" || User_En_Time=="" || User_En_Day==""){
+    if(User_En_Task==""|| User_En_Day==""){
         alert("Enter both the values");
     }
     else{
         // alert("You have entered task "+User_En_Task+" and the time is "+User_En_Time+" You have to complete task "+User_En_Day);
         // today_work_li.insertAdjacentHTML(3,task_li)
-        add_task(User_En_Day,User_En_Task,User_En_Time);
+        add_task(User_En_Day,User_En_Task);
     }
     location.reload();
 }
@@ -303,6 +303,26 @@ function delete_task(element){
     //     // show_task_added();
     // }
     
+}
+
+
+function show_form(btn,text,ele) {
+    var add_task_form=document.getElementById(ele);
+    add_task_form.classList.toggle('hide');
+    var text_box=document.getElementById(text);
+    if(add_task_form.className!="hide")
+    {
+        text_box.style.transform="rotateZ(45deg)";
+        btn.style.background="#ff412f";
+        document.getElementById("blurr_bg").style.display="block";
+        // btn.style.color="red";
+    }
+    else{
+        text_box.style.transform="rotateZ(0deg)";
+        btn.style.background="#5fa9e0";
+        document.getElementById("blurr_bg").style.display="none";
+        // btn.style.color="white";
+    }
 }
 
 
