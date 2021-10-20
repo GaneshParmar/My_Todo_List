@@ -188,6 +188,9 @@ ul>li{
     margin: 5px 0px;
     /* z-index: 0; */
 }
+li>img{
+    position: relative;
+}
 li>label{
     position: relative;
     width: 50%;
