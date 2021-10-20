@@ -20,13 +20,12 @@ function Get(yourUrl){
 var url=api+apikey+tag;
 
 function showCongratulation(ele) {
-    var input_chk_box=ele.querySelector("#task");
-    if(input_chk_box.disabled!=true){
-        var data =JSON.parse(Get(url));
-        document.querySelector("#congrats_greeter").style.display="block";
-        var gif_url=data.data.images.original.url;    
-        document.querySelector("#gif_show").style.background="url("+gif_url+") no-repeat center";
-    } 
+    // var input_chk_box=ele.querySelector("#task");
+    var data =JSON.parse(Get(url));
+    document.querySelector("#congrats_greeter").style.display="block";
+    var gif_url=data.data.images.original.url;    
+    document.querySelector("#gif_show").style.background="url("+gif_url+") no-repeat center";
+    
 }
 function close_Congrats() {
     document.querySelector("#congrats_greeter").style.display="none";
@@ -47,7 +46,8 @@ function set_date_(today_id,tom_id) {
     document.querySelector(tom_id).innerHTML=tom_date;
 }
 // let  temp=0;
-function dash_the_task(element){
+function dash_the_task(element,show_congratuation=true){
+    // console.log('in dash');
     // let a=prompt("Are You serious ?");
     // var input_checkmark=element.id;
     // element.disabled=true;
@@ -55,12 +55,15 @@ function dash_the_task(element){
     let li_select=element;
     // var parent_ele=element.parentElement.parentElement;
     var ul_id="#"+li_select.parentElement.id;
-    console.log(ul_id);
+    // console.log(ul_id);
     var select_ul=document.querySelectorAll(`${ul_id}`+" li");
     
     // Disable the checkbox
     var input_chk_box=li_select.querySelector("#task");
     if(input_chk_box.disabled!=true){
+        if(show_congratuation){
+            showCongratulation(element);
+        }       
         input_chk_box.checked=true;
         input_chk_box.disabled=true;
         var task_name=li_select.querySelector("#task_name");
@@ -80,7 +83,7 @@ function dash_the_task(element){
             continue;
         }
     }
-    console.log(index);
+    // console.log(index);
     if (input_chk_box.checked==true){
         if(ul_id=="#tomorrows_works"){
             tomorrow_task_list=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
@@ -141,16 +144,16 @@ function Check_The_task_done() {
     var Tomorrow_tasks=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
     var Today_tasks=JSON.parse(localStorage.getItem("Today_Task_List"));
 
-    console.log("Tommorrow_tasks are ",Tomorrow_tasks);
-    console.log("Todays_tasks are ",Today_tasks);
+    // console.log("Tommorrow_tasks are ",Tomorrow_tasks);
+    // console.log("Todays_tasks are ",Today_tasks);
 
     for(i in Today_tasks){
-        console.log("The task no is ",i);
+        // console.log("The task no is ",i);
         if(Today_tasks[i].task_done==1){
             var li_list=document.querySelectorAll("#todays_works li");
             var input_box=li_list[i].querySelector("#task");
             tick_the_task(input_box);
-            dash_the_task(li_list[i]);
+            dash_the_task(li_list[i],false);
         }
         else{
             var li_list=document.querySelectorAll("#todays_works li");
@@ -164,7 +167,7 @@ function Check_The_task_done() {
             var li_list=document.querySelectorAll("#tomorrows_works li");
             var input_box=li_list[i].querySelector("#task");
             tick_the_task(input_box);
-            dash_the_task(li_list[i]);
+            dash_the_task(li_list[i],false);
         }
         else{
             var li_list=document.querySelectorAll("#tomorrows_works li");
@@ -191,13 +194,13 @@ function show_task_added(){
 // Function for adding the task
 function add_task(day,task) {
     var li_box=document.querySelector(`${day}`);
-    li_box.innerHTML+=('beforeend','<li onclick="showCongratulation(this);dash_the_task(this);">\
+    li_box.innerHTML+=('beforeend','<li onclick="dash_the_task(this);">\
     <span class="cheeck_container">\
         <input type="checkbox" name="task" id="task" value="done" "/>\
         <span class="done_checkmark"></span>\
     </span> \
     <label  id="task_name" class="">'+`${task}`+'</label>\
-    <img src="https://img.icons8.com/color/48/000000/delete-forever.png" onclick="delete_task(this)" width="30" height="30"/>\
+    <img src="https://img.icons8.com/color/48/000000/delete-forever.png" onclick="delete_task(this);" width="30" height="30"/>\
     </li>');
 }
 
@@ -242,6 +245,7 @@ function show_task() {
 
 
 function delete_task(element){
+    // console.log("In delete");
     // document.getElementById().disabled = true;
     var parent_ele=element.parentElement;
     var ul_id="#"+parent_ele.parentElement.id;
@@ -298,7 +302,7 @@ function delete_task(element){
     //     }
     //     else{
     //         tomorrow_task_li.splice(index,index);
-    //         console.log(tomorrow_task_list);
+            console.log(tomorrow_task_list);
     //     }
     //     localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_li));
     //     // show_task_added();
@@ -310,7 +314,7 @@ function delete_task(element){
     //     }
     //     else{
     //         today_task_li.splice(index,index);
-    //         console.log(today_task_li);
+            console.log(today_task_li);
     //     }        
     //     localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
     //     // show_task_added();
@@ -338,8 +342,8 @@ function show_form(btn,text,ele) {
     }
 }
 
-//localStorage.removeItem("Today_Task_List");
-//localStorage.removeItem("Tomorrow_Task_List");
+// localStorage.removeItem("Today_Task_List");
+// localStorage.removeItem("Tomorrow_Task_List");
 local_storage_create();
 set_date_("#todays_date","#tomorrows_date");
 Check_The_task_done();
