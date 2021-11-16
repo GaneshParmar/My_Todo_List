@@ -2,6 +2,7 @@
 let date= new Date().getDate();
 var today_task_list=[];
 var tomorrow_task_list=[{task_name: 'Get Up Early', task_done: 0},{task_name: 'Do Yoga', task_done: 0}];
+var del_popup=document.getElementById("delete_popup");
 var reward_options=document.querySelector("#rewards_list");
 // Loading the audio
 const done_audio=new Audio('./audio/done.wav');
@@ -278,6 +279,7 @@ function show_task() {
 
 
 function delete_task(element){
+    show_delete_pop_up();
     // document.getElementById().disabled = true;
     var parent_ele=element.parentElement;
     var ul_id="#"+parent_ele.parentElement.id;
@@ -372,6 +374,13 @@ function no_of_task_done() {
 
 function show_task_no_cmplted() {
     tasks_p.innerText=JSON.parse(localStorage.getItem("task_completed"));
+}
+
+function show_delete_pop_up() {
+    del_popup.style.opacity="1";
+    setTimeout(() => {
+        del_popup.style.opacity="0";
+    }, 500);
 }
 
 

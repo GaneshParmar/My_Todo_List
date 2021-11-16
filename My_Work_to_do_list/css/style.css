@@ -21,6 +21,29 @@
 .hide{
     display: none !important;
 }
+
+/* Delete pop up */
+.delete_popup{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(34, 34, 34);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    z-index: 31;
+}
+.delete_popup>div>h1{
+    text-align: center;
+    margin-top: 10%;
+    color: #ff412f;
+}
+/*  */
+
 #blurr_bg{
     display: none;
     position: absolute;

@@ -6,8 +6,6 @@ var master_reward=document.getElementById("master");
 var pro_reward=document.getElementById("pro");
 
 
-// var del_popup=document.getElementById("delete_popup");
-
 // if(localStorage.getItem("rewards")==null){
 //     var rewards=[];
 // }
@@ -16,7 +14,7 @@ var pro_reward=document.getElementById("pro");
 //     var rewards=JSON.parse(localStorage.getItem("rewards"));
 // }
 
-// Function for storing which section is editing
+// Function for storing which section is editing  ...m for master
 function edit_section(section_name) {
     if(localStorage.getItem("reward_section")==null){
         localStorage.setItem("reward_section",section_name);
@@ -94,12 +92,7 @@ function display_rewards() {
     
 }
 
-// function show_delete_pop_up() {
-//     del_popup.style.opacity="1";
-//     setTimeout(() => {
-//         del_popup.style.opacity="0";
-//     }, 500);
-// }
+
 
 
 // function remove_this(btn_ele){
