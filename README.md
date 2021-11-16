@@ -5,3 +5,6 @@ You can use this for your todo task<br>
 
 Update On 28 Sep 2021
 Added Giphy Api for random gif generate when task done
+
+Update On 16 Nov 2021
+Added reward section
