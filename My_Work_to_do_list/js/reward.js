@@ -108,7 +108,7 @@ function add_reward(params) {
     document.querySelectorAll("input").forEach(input => {
         input.value="";
     }); 
-    location.href = '../today_reward.html';
+    location.href = 'today_reward.html';
 
 
     // if(reward_name.value=="" || reward_descp.value==""){
