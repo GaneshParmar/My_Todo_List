@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today Reward</title>
+    <link rel="stylesheet" href="./css/reward.css">
+    <link rel="stylesheet" href="./css/today_reward.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html"><img src="./assests/go_back.png" alt="" srcset="" width="60"></a>
+        Today's Rewards
+    </nav>
+    
+    <!-- Delete pop up -->
+    <div class="delete_popup" id="delete_popup">
+        <div>
+            <img src="./assests/delete_bin.png" alt="" srcset="">
+            <h1>Removed!</h1>
+        </div>        
+    </div>
+    <!--  -->
+    <div class="notice">
+        <h3>Notice</h3>
+        <h5>Do task and unlock Locked rewards</h5>
+    </div>
+
+    <div id="reward_container">
+        <div class="rewards beginner_lvl">
+            <h2>Beginner</h2>
+            <p>Complete 5 tasks</p>
+            <div class="flex">
+                <div class="reward" id="beginner">
+                    <h3>Tap on edit to add or edit reward</h3>
+                    <a href="reward.html" class="first_time" onclick="edit_section('b')"><img src="https://img.icons8.com/material-rounded/24/000000/edit.png" width="30"/></a>     
+                </div>
+            </div>
+            
+        <hr>
+        <div class="rewards master_lvl">
+            <h2>Master</h2>
+            <p>Complete 8 tasks</p>
+            <div class="flex">
+            <div class="reward" id="master">
+                
+                <h3>Tap on edit to add or edit reward</h3>
+                <a href="reward.html" class="first_time" onclick="edit_section('m')"><img src="https://img.icons8.com/material-rounded/24/000000/edit.png" width="30"/></a>             
+            </div>
+            </div>
+        </div>
+        <hr>
+        <div class="rewards pro_lvl">
+            <h2>Piro Level</h2>
+            <p>Complete 12 tasks</p>
+            <div class="flex">
+            <div class="reward" id="pro">
+                
+                <h3>Tap on edit to add or edit reward</h3>
+                <a href="reward.html" class="first_time" onclick="edit_section('p')"><img src="https://img.icons8.com/material-rounded/24/000000/edit.png" width="30"/></a>            
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="./js/today_reward.js"></script>
+</html>

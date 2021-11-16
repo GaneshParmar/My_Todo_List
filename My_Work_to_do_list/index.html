@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script> -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 </head>
@@ -17,30 +17,66 @@
     <div id="blurr_bg"></div>
 
     <nav>
-    <h1>All Tasks</h1>
-    <!-- <a href="#add_task">Add Tasks<img src="https://img.icons8.com/material-outlined/24/000000/plus--v2.png"/></a> -->
+        <h1>To Do List</h1><span></span>
+        <img src="./assests/to_do_icon.jfif" alt="" width="20">
+        <div class="hamburger" onclick="show_menu()">
+            <img src="./assests/hamburger.png" alt="" srcset="" width="30" >
+        </div>
+    
+        <div class="nav_items" id="nav_items">
+            <div class="close">
+                <img src="./assests/reward_icon.png" alt="" srcset="" width="60">
+                <img src="./assests/close.png" alt="" srcset="" width="30" height="30" onclick="close_menu()">
+            </div>
+            <div class="ul">
+                <!-- <div class="nav_link"><a href="reward.html">Add Reward <img src="./assests/reward_img.png" alt="" srcset="" width="50"></a></div><hr> -->
+                <div class="nav_link"><a href="today_reward.html">Today's Rewards <img src="./assests/reward_acheived.png" alt="" srcset="" width="30"></a></div>
+                <hr>
+                <div class="nav_link block">Contact Me</div><hr>
+                <div class="nav_link block">Feedback</div><hr>
+                <div class="nav_link block">About Me</div><hr>
+                <h5 class="bottom">2021-2022 all rights reserved</h5>
+            </div>
+        </div>
+        
+        <!-- <a href="#add_task">Add Tasks<img src="https://img.icons8.com/material-outlined/24/000000/plus--v2.png"/></a> -->
     </nav>    
+    <div class="show_task_no">Task Completed <p id="tasks_done">0</p></div>
     <div class="container">
-        <div class="today" id="Today">
+        <div class="today day_box" id="Today">
             <div class="gif_container" id="today_pic">
                 <div class="hanger">Today's Tasks</div>
                 <div class="date-time" id="todays_date"></div>
             </div>
-            <ul class="list_of_works" id="todays_works">
-                
+            <ul class="list_of_works" id="todays_works">                
+                <!-- <li onclick="dash_the_task(this);">
+                   
+                    <span class="cheeck_container">
+                        <input type="checkbox" name="task" id="task" value="done" />
+                        <span class="done_checkmark"></span>
+                    </span> 
+                    <label  id="task_name" class="">Test</label>
+                    <img src="https://img.icons8.com/color/48/000000/delete-forever.png" onclick="delete_task(this);" width="30" height="30"/>
+                </li> -->
+
             </ul>
         </div>
         <hr>
-        <div class="tomorrow" id="Tomorrow">
+        <div class="tomorrow day_box" id="Tomorrow">
             <div class="gif_container" id="tomorrow_pic">
                 <div class="hanger">Tomorrow's Tasks</div>
                 <div class="date-time" id="tomorrows_date"></div>
             </div>
             <ul class="list_of_works" id="tomorrows_works">
-                
+                <div class="lock">
+                    <img src="./assests/lock.png" alt="" srcset="" width="200"/>
+                    <h5>Unlock Tommorrow</h5>
+                </div>
             </ul>
         </div>
+        <!-- Button for showing add task form -->
         <div class="add_task" onclick="show_form(this,'inner_text','add_task')"><span id="inner_text">+</span></div>
+        <!--  -->
     </div>
     <div id="add_task" class="hide">
         <!-- <h4>Add Task In the Input Fields</h4> -->
@@ -69,5 +105,5 @@
         </div>
 
 </body>
-<script src="index.js"></script>
+<script src="./js/index.js"></script>
 </html>

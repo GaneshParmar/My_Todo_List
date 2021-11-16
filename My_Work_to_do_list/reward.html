@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Reward</title>
+    <link rel="stylesheet" href="./css/reward.css">
+</head>
+<body>
+    <div class="pop_up" id="pop_up">
+        Added! 
+    </div>
+    <nav>
+        <a href="today_reward.html"><img src="./assests/go_back.png" alt="" srcset="" width="60"></a>
+        Add Rewards to get after task completion</nav>
+
+    <form action="">
+        <label for="reward_name">Reward Name</label>
+        <input type="text" id="reward_name"/>
+        <!-- <label for="img_address">Add Img address <h4>(COPY FROM GOOGLE)</h4></label> -->
+        <!-- <input type="text" id="img_address"/> -->
+        <label for="description">Small Description</label>
+        <input type="text" id="description" required/>
+        <label>Select The type of reward</label><br><br>
+        <div class="wrap">
+            <div class="radio_wrap">
+                <input type="radio" name="type" id="youtube" onclick="reward_type()" value="yt" required>
+                <label for="youtube" class="type_selection">youtube</label>
+            </div>
+            <div class="radio_wrap">
+                <input type="radio" name="type" id="type" onclick="reward_type()" value="ot" required>
+                <label for="type" class="type_selection">Other</label>
+            </div>
+        </div>
+        <div class="reward_info">
+            <hr>
+            <div class="youtube hide" id="youtube_sec">
+                <label for="video_id"><b>Enter Video Id</b></label>
+                <input type="text" id="video_id" placeholder="">
+                <p> <b>Don't know video id?</b><br>
+                    For Eg the URL of the video is: https://www.youtube.com/watch?v=aqz-KE-bpKQ. Therefore, the ID of the video is aqz-KE-bpKQ .
+                </p>
+                <br>
+                <!-- <input type="submit" value="Add" class="btn"> -->
+            </div>
+            <div class="other hide" id="other_sec">
+                <label for="img_address"><b>Enter Img Address</b></label>
+                <input type="text" id="img_address" placeholder="google img allowed">
+                <p> To display any image.
+                    <ul>
+                        <h4>Some pre images address</h4>
+                        <b><p>./assests/chess_logo.jfif<p></b>
+                        <b><p>./assests/fast_food.jfif</p></b>
+                    </ul>
+                </p>
+                <br>
+            </div>
+            <a class="btn" onclick="add_reward()">Edit</a>  
+        </div>
+    </form>
+
+
+</body>
+<script src="./js/reward.js"></script>
+</html>

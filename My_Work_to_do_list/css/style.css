@@ -1,0 +1,709 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@600&family=Lato&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    transition: 0.4s all ease;
+}
+/* Special Classes */
+.dashed{
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.164) !important;
+    /* animation: disco_border 1s infinite forwards ease; */
+}
+.animation{
+    animation: disco_border 1s infinite forwards ease;
+}
+.hide{
+    display: none !important;
+}
+#blurr_bg{
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.651);
+    backdrop-filter: blur(5px);
+    z-index: 2;
+}
+/* For Congratulation */
+.congrats_container{
+    /* position: absolute; */
+    display: none;
+    opacity: 0;
+    position: fixed;
+    top: 50%;
+    /* display: flex; */
+    /* flex-direction: column; */
+    width: 90%;
+    height: 80%;
+    /* grid-template-rows: 4fr 2fr; */
+    /* top: 50%;
+    left: 50%; */
+    transform: translate(-50%,-50%);
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 10px;
+    box-shadow: 0px 1px 100px rgb(0, 0, 0);
+    /* background-color: white; */
+    z-index: 10;
+    animation: show 0.5s forwards;
+    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+}
+.congrats_container>.gif{
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 60%;
+    top: 0;
+    background-color: green;
+    background: no-repeat 100%;
+    background-position: center;
+}
+.congrats_container>.message{
+    position: absolute;
+    text-align: center;
+    font-family: sans-serif;
+    bottom: 0;
+    /* background: url(/done.png); */
+    width: 100%;
+    height: 40%;
+    padding: 10% 0%;
+} 
+.congrats_container>.message>#msg{
+    margin-bottom: 40px;
+    font-size: 1.6em;
+}
+.congrats_container>.message>#btn{
+    width: 100%;
+    padding: 14px 0px;
+    color: white;
+    background-color: #e8676f;
+    border: none;
+    /* border-radius: 60px; */
+}
+/*  */
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    /* background: linear-gradient(90deg,#aa076b , #61045f); */
+}
+.container>input[type="checkbox"]{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 3;
+}
+nav{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    /* justify-content: space-around; */
+    width: 100%;
+    /* background-color: #5fa9e0; */
+    box-shadow: 0 0 20px rgb(192, 189, 189) ;
+    padding: 10px 4px;
+}
+nav>h1{
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    /* font-weight: 600; */
+    color: rgba(83, 70, 70, 0.623);
+    margin-right: 10px;
+}
+
+.container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+    height: fit-content;
+    margin-top: 3px;
+}
+
+/* Update 1.1 */
+/* Date 06/11/2021 */
+/* For big screen */
+/* This update include to disable the tommorrow task which doesn't allow user to click task done */
+.bottom{
+    position: absolute;
+    bottom: 30px;
+}
+.block{
+    color: rgba(255, 245, 245, 0.377);
+}
+
+
+/* Added a hamburger for mobile for navbar */
+nav>.hamburger{
+    position: absolute;
+    right: 20px;
+}
+.nav_items>.close{
+    display: flex;
+    justify-content: space-around;
+    align-items:center;
+    padding: 10px;
+}
+.nav_items>.close>img:nth-last-child(1){
+    position: absolute;
+    right: 15px;
+}
+.nav_items{
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 90%;
+    height: 100vh;
+    z-index: 20;
+    background-color: white;
+    color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.nav_items>.ul{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Bitter', serif;
+    font-family: 'Lato', sans-serif;
+    background-color: #268cf2;
+    min-height: 100vh;
+}
+.nav_items>.ul>hr{
+    width: 95%;
+    margin-left: 2.5%;
+    border: 0.1px solid #ffffff3a;
+}
+.nav_items>.ul>.nav_link{
+    position: relative;
+    /* display: block; */
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+.nav_items>.ul>.nav_link>a{
+    color: white;
+    text-decoration: none;
+}
+.nav_items>.ul>h5{
+    color: rgba(255, 255, 255, 0.445);
+}
+.nav_items>.ul>.nav_link>img{
+    vertical-align: middle;
+}
+
+/* Tasks Done No Css */
+.show_task_no{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding: 1px 50px;
+    margin: 0 auto;
+    font-family: 'Baloo Bhai 2';
+    font-size: 1.2em;
+    border: 2px solid rgba(99, 84, 84, 0.281);
+    border-radius: 10px;
+    color: rgba(0, 0, 0, 0.445);
+}
+.show_task_no>p{
+    color: #d54c4cc2;
+    font-family: 'Bitter',cursive;
+    font-weight: 700;
+    margin-left: 20px;
+}
+/*  */
+.reward_title{
+    display: block;
+    width: 90%;
+    position: relative;
+    color: black;
+    text-align: right;
+    padding-right: 10%;
+    font-family: monospace;
+}
+
+.lock{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: #ffea008e;
+    font-family: 'Bitter', serif;
+    /* font-family: 'Roboto'; */
+    font-size: 1.4em;
+    opacity: 1;
+    z-index: 10;
+    /* font-family: 'Lato', sans-serif; */
+}
+/* End */
+
+
+.today,.tomorrow{
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+hr{
+    margin: 10px 0;
+}
+/* .today{
+    background-color: aqua;
+}
+.tomorrow{
+    background-color: blue;
+} */
+
+.gif_container{
+    /* border-bottom: 2px solid rgb(138, 138, 138); */
+    position: relative;
+    width: 90%;
+    height: 30vh;
+    /* z-index: -2; */
+    /* background-color: white; */
+}
+ul{
+    position: relative;
+    width: 90%;
+    height: fit-content !important;
+
+    
+    margin-bottom: 10vh;
+}
+.tomorrow>ul{
+    /* Update 1.1 */
+    min-height: 50vh;
+    /*  */
+}
+/* .gif_container{
+    z-index: -2;
+} */
+ul>li{
+    position: relative;
+    text-decoration: none;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background:#8adc79; */
+    padding: 5px 5px;
+    border: 1px solid rgba(145, 140, 140, 0.178);
+    border-radius: 5px;
+    box-shadow: 1px 1px 8px 0 rgba(0, 0, 0, 0.1);
+    margin: 5px 0px;
+    /* z-index: 0; */
+}
+li>img{
+    position: relative;
+    /* right: -10%; */
+    z-index: 19;
+    /* pointer-events: visible; */
+    /* cursor: pointer; */
+}
+li>label{
+    position: relative;
+    width: 50%;
+    font-family: 'Poppins', sans-serif;
+    font-family: 'Titillium Web', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 400;
+    color: #131313 !important;
+    /* background-color: #61045f; */
+    /* width: 20px;
+    height: 20px; */
+}
+#task_name{
+    color: rgba(0, 0, 0, 0.815);
+}
+li>span>input[type="checkbox"]{
+    position: absolute;
+    /* left: 0; */
+    width: 30px;
+    height: 25px;
+    opacity: 0;
+}
+  
+/* Update 1.2 */
+/* The img is of reward box */
+
+/*  */
+
+
+/* Create the checkmark/indicator (hidden when not checked) */
+/* .done_checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  /* li > input:checked ~ .done_checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+
+
+
+
+
+
+.done_checkmark{
+    display: block;
+    position:relative;
+    left: 0px;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #5fa8e025;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.done_checkmark::after{   
+    display: none;
+    content: ""; 
+    position: absolute;
+}
+li>span>input[type="checkbox"]:checked ~ .done_checkmark::after{
+    display: block;
+    position: relative;
+} 
+li>span> .done_checkmark::after{
+    width: 25px;
+    height: 25px;
+    top: -1px;
+    left: -1px;
+    pointer-events: none;
+    /* border: 1px solid white; */
+    background: url('../assests/done.png') no-repeat center;
+    background-size: cover;
+}
+li>p{
+    position: relative;
+    display: flex;
+    align-items: center;
+    bottom: 0px;
+    right: 0%;
+    font-size: 0.7em;
+    color: red;
+}
+#today_pic{
+    background: url('../assests/today_work_box_bg.jfif') no-repeat;
+    z-index: 1;
+}
+
+#tomorrow_pic{
+    background: url('../assests/tomorrow_bg.jfif') no-repeat;
+    z-index: 1;
+}
+
+#today_pic,#tomorrow_pic{
+    background-size: 100% ;
+    /* box-shadow: 2px 2px 10px gray; */
+}
+#tomorrow_pic{
+    background-size: 100%;
+    background-position-y: -50px;
+}
+.hanger{
+    height: 4vh;
+    margin: 0 auto;
+    text-align: center;
+    width: 95%;
+    background: linear-gradient(90deg,#aa076b , #61045f);
+    border: 1px solid yellow;
+    transform-origin: top;
+    transform: rotateX(-90deg);
+    animation: hang_animate 4s forwards;
+    z-index: 3;
+}
+.date-time{
+    position: absolute;
+    width: 100%;
+    height: 95%;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* left: 10px; */
+    background: #00000091;
+    /* box-shadow: 1px 1px 10px whitesmoke; */
+    /* border-radius: 20px; */
+    padding: 4px 2px;
+    font-family: monospace;
+    font-size: 1.5em;
+    color: white;
+    z-index: -1;
+}
+ul{
+    z-index: 1;
+    height: 70%;
+}
+ul>li{ 
+    overflow: hidden;
+ }
+
+#tomorrows_works>li{
+    overflow: hidden;
+}
+
+ul>li>#show_done{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: #49FF00;
+    opacity: 0.6;
+    background-size: cover;
+    border-radius: 5px;
+    z-index: 20;
+    font-family: 'Bitter',sans-serif;
+    font-weight: bolder;
+    color: white;
+    /* pointer-events: none; */
+    /* text-align: center; */
+}
+
+ul>li>.task_done{
+    left: 0% !important;
+}
+
+/* .add_task::after{
+    position: absolute;
+    content: "";
+    width: 100vw;
+    border-top: 0.3px solid gray;
+    z-index: -12;
+} */
+.add_task{
+    position: fixed;
+    top: 500px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75px;
+    height: 75px;
+    background-color: #5fa9e0;
+    border-radius: 50%;
+    z-index: 10;
+    font-size: 3em;
+    font-family: 'Baloo Bhai 2';
+    font-weight: 100;
+    box-shadow: 0px 0px 10px rgb(197, 179, 179);
+    color: white;
+}
+
+
+#add_task{
+    display: block;
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    min-width: 98%;
+    min-height: 50%;
+    /* background-color: rgba(172, 169, 169, 0.116); */
+    z-index: 3;
+    animation: show_form 0.5s ease forwards;
+}
+/* Title */
+#add_task>h4{
+    font-size: 1.4em;
+    text-align: center;
+    margin-top: 30%;
+    font-family:Arial, Helvetica, sans-serif;
+    text-decoration: underline;
+    font-style: italic;
+}
+#add_task>.add_task_container{
+    /* position: absolute; */
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 96%;
+    padding: 5px 5px;
+    margin: 12% 0;
+    transform: translate(7%,-10%);
+    border-top: 7px solid blueviolet;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#add_task>.add_task_container>label{
+    display: inline-block;
+    font-size: 1.3em;
+    /* width: 20%; */
+    margin-top: 10px;
+    text-decoration: 0.5px solid underline gray;
+}
+#add_task>.add_task_container>input{
+    outline: none;
+    font-size: large;
+    /* margin-left: 30px; */
+    width: 100%;
+    height: 50px;
+    border: 0.7px solid blueviolet;
+    color: blueviolet;
+    border-radius: 10px;
+}
+#add_task>.add_task_container>span{
+    display: block;
+    font-size: 1.3em;
+    font-family: 'Roboto';
+    font-weight: 400;
+}
+#add_task>.add_task_container>span>input{
+    width:20px;
+    height: 20px;
+    margin: 10px;
+}
+#add_task>.add_task_container>#submit{
+    align-self: center;
+    margin-top: 20px;
+    width: 80%;
+    background-color: blueviolet;
+    color: white;
+}
+/* Update 1.1 */
+/* Date 06/11/2021 */
+/* For big screen */
+
+@media (min-width:700px) {
+    .container{
+        display: flex;
+        flex-direction: row;
+    }
+    .day_box{
+        margin: 1%;
+        background-color: #e2e7fa52;
+        padding: 1%;
+    }
+    .gif_container{
+        height: 40vh;
+    }
+    hr{
+        display: none;
+    }
+}
+
+
+
+/* End  */
+
+@keyframes hang_animate {
+    0%{
+        transform: rotateX(-90deg);
+    }
+    25%{
+        transform: rotateX(70deg);
+    }
+    50%{
+        transform: rotateX(-40deg);
+    }
+    75%{
+        transform: rotateX(20deg);
+    }
+    100%{
+        transform: rotateX(0deg);
+    }
+}
+
+
+
+
+
+/* Animations Here */
+
+@keyframes show {
+    0%{
+        opacity: 0;
+    }
+    /* 50%{
+        opacity: 0.5;
+    } */
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes show_form {
+    0%{
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(-50%);
+    }
+}
+
+@keyframes disco_border {
+    0%{
+        border-bottom: 2px solid #ff512f;
+        border-top: 2px solid blueviolet;
+        border-left: 2px solid orange;
+        border-right: 2px solid #5fa9e0;
+    }
+    25%{
+        border-bottom: 2px solid #5fa9e0;
+        border-top: 2px solid #ff512f;
+        border-left: 2px solid blueviolet;
+        border-right: 2px solid orange;
+    }
+    50%{
+        border-bottom: 2px solid orange;
+        border-top: 2px solid #5fa9e0;
+        border-left: 2px solid #ff512f;
+        border-right: 2px solid blueviolet;
+    }
+    75%{
+        border-top: 2px solid blueviolet;
+        border-left: 2px solid orange;
+        border-right: 2px solid #5fa9e0;
+        border-bottom: 2px solid #ff512f;
+    }
+    100%{
+        border-bottom: 2px solid #ff512f;
+        border-top: 2px solid blueviolet;
+        border-left: 2px solid orange;
+        border-right: 2px solid #5fa9e0;
+    }
+}
+
+/* @media (max-width:700px) {
+    #add_task>.add_task_container{
+        padding: 0px;
+    }
+    #add_task>.add_task_container>label{
+        font-size: 1.1em;
+        width: fit-content;
+    }
+    #add_task>.add_task_container>input{
+        position: absolute;
+        right: 0px;
+        width: 40%;
+    }
+} */
