@@ -82,20 +82,6 @@ nav{
     text-align: left;
     font-size: 0.8em;
 }
-.beginner_lvl>.reward{
-    background-color: #cd7f32;
-    color: white;
-}
-
-.master_lvl>.reward{
-    background-color: silver;
-    color: white;
-}
-
-.pro_lvl>.reward{
-    background-color: gold;
-    color: white;
-}
 
 
 .reward>.reward_detail>p{
@@ -109,7 +95,7 @@ nav{
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background-color: #707065;
+    /* background-color: #707065; */
     color: white;
     font-family: 'Bitter', serif;
     /* font-family: 'Roboto'; */
@@ -117,6 +103,20 @@ nav{
     opacity: 0.8;
     z-index: 10;
     /* font-family: 'Lato', sans-serif; */
+}
+#beginner>div>.lock{
+    background-color: #cd8032b0;
+    color: white;
+}
+
+#master>div>.lock{
+    background-color: rgba(192, 192, 192, 0.400);
+    color: white;
+}
+
+#pro>div>.lock{
+    background-color: rgba(255, 217, 0, 0.747);
+    color: white;
 }
 .lock>img{
     z-index: 11;

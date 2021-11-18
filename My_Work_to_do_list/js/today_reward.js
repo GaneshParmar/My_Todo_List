@@ -30,6 +30,7 @@ function show_reward(box,rwrd,type,t) {
     // 
     // This will check the type of reward youtube or other
     // 
+    console.log(box);
     if(type=="yt"){
         box.innerHTML=`       
                <div>
@@ -37,7 +38,7 @@ function show_reward(box,rwrd,type,t) {
                             <img src="./assests/lock.png" alt="" srcset="" width="200"/>
                     </div>
                 </div>
-                <a href="reward.html" class="edit" onclick="edit_section(${t})"><img src="https://img.icons8.com/material-rounded/24/000000/edit.png" width="30"/></a>
+                <a href="reward.html" class="edit" onclick="edit_section('${t}')"><img src="https://img.icons8.com/material-rounded/24/000000/edit.png" width="30"/></a>
                 <iframe width="" height="300" src="https://www.youtube.com/embed/${rwrd[0]._img}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="reward_detail">
                     <div class="reward_name">
@@ -55,7 +56,7 @@ function show_reward(box,rwrd,type,t) {
                 <img src="./assests/lock.png" alt="" srcset="" width="200"/>
         </div>
     </div>
-    <a href="reward.html" class="edit" onclick="edit_section(${t})"><img src="https://img.icons8.com/material-rounded/24/000000/edit.png" width="30"/></a>
+    <a href="reward.html" class="edit" onclick="edit_section('${t}')"><img src="https://img.icons8.com/material-rounded/24/000000/edit.png" width="30"/></a>
     <img src="${rwrd[0]._img}" alt="">
     <div class="reward_detail">
         <div class="reward_name">
@@ -76,17 +77,17 @@ function display_rewards() {
     // beginner
     if(localStorage.getItem("beginner_rewards")!=null){
         var b_reward_data=JSON.parse(localStorage.getItem("beginner_rewards"));
-        show_reward(beginner_reward,b_reward_data,b_reward_data[0]._type,'b');
+        show_reward(beginner_reward,b_reward_data,b_reward_data[0]._type,"b");
     }
     // master
     if(localStorage.getItem("master_rewards")!=null){
         var m_reward_data=JSON.parse(localStorage.getItem("master_rewards"));
-        show_reward(master_reward,m_reward_data,m_reward_data[0]._type,'m');
+        show_reward(master_reward,m_reward_data,m_reward_data[0]._type,"m");
     }
     // pro
     if(localStorage.getItem("pro_rewards")!=null){
         var p_reward_data=JSON.parse(localStorage.getItem("pro_rewards"));
-        show_reward(pro_reward,p_reward_data,p_reward_data[0]._type,'p');
+        show_reward(pro_reward,p_reward_data,p_reward_data[0]._type,"p");
     }
 
     

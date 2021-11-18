@@ -80,12 +80,12 @@ function dash_the_task(element,show_congratuation=true){
         task_name.classList.toggle("dashed");
         li_select.classList+="animation";
         li_select.querySelector("#show_done").classList+="task_done";
-         done_audio.play();
+         
         no_of_task_done(); 
         show_task_no_cmplted();
         if(show_congratuation){
             setTimeout(() => {
-                
+                done_audio.play();
                 showCongratulation(element);     
             }, 500);
         }
@@ -280,6 +280,7 @@ function show_task() {
 
 function delete_task(element){
     show_delete_pop_up();
+
     // document.getElementById().disabled = true;
     var parent_ele=element.parentElement;
     var ul_id="#"+parent_ele.parentElement.id;

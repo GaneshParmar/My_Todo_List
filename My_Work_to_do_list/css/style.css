@@ -44,15 +44,26 @@
 }
 /*  */
 
-#blurr_bg{
+#blurr_bg,#congrats_greeter>.blurr_bg{
     display: none;
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.651);
+    background-color: rgba(255, 255, 255, 0.445);
     backdrop-filter: blur(5px);
     z-index: 2;
 }
+#congrats_greeter>.blurr_bg{
+    top: -200px;
+    left: -200px;
+    width: 200vw;
+    height: 200vh;
+    display: block;
+    pointer-events: visible;
+    /* background-color: rgba(255, 255, 255, 0); */
+    z-index: 0;
+}
+
 /* For Congratulation */
 .congrats_container{
     /* position: absolute; */
@@ -71,7 +82,7 @@
     background-color: white;
     border: 1px solid white;
     border-radius: 10px;
-    box-shadow: 0px 1px 100px rgb(0, 0, 0);
+    box-shadow: 0px 1px 10px gray;
     /* background-color: white; */
     z-index: 10;
     animation: show 0.5s forwards;
