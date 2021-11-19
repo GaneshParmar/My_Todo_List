@@ -2,12 +2,24 @@
 let date= new Date().getDate();
 var today_task_list=[];
 var tomorrow_task_list=[{task_name: 'Get Up Early', task_done: 0},{task_name: 'Do Yoga', task_done: 0}];
+var del_popup=document.getElementById("delete_popup");
+var reward_options=document.querySelector("#rewards_list");
+// Loading the audio
+const done_audio=new Audio('./audio/done.wav');
+
+// Selecting p tag to show no of task completed
+var tasks_p=document.getElementById("tasks_done");
+
+if(localStorage.getItem("rewards")!=null){
+    var reward_stored=JSON.parse(localStorage.getItem("rewards"));
+}
+
 
 // For random Gif generator
 
 var api="https://api.giphy.com/v1/gifs/random?";
 var apikey="api_key=0UTRbFtkMxAplrohufYco5IY74U8hOes";
-var tag="&tag=hurray&rating=pg-13";
+var tag="&tag=fails&rating=pg-13";
 
 
 function Get(yourUrl){
@@ -54,27 +66,34 @@ function dash_the_task(element,show_congratuation=true){
     // document.getElementById().disabled = true;
     let li_select=element;
     // var parent_ele=element.parentElement.parentElement;
-    var ul_id="#"+li_select.parentElement.id;
+    var ul_id="#todays_works";
     // console.log(ul_id);
     var select_ul=document.querySelectorAll(`${ul_id}`+" li");
     
     // Disable the checkbox
     var input_chk_box=li_select.querySelector("#task");
     if(input_chk_box.disabled!=true){
-        if(show_congratuation){
-            showCongratulation(element);
-        }       
         input_chk_box.checked=true;
         input_chk_box.disabled=true;
         var task_name=li_select.querySelector("#task_name");
         // task_name.style.color="rgba(0, 0, 0, 0.2) !important";
         task_name.classList.toggle("dashed");
         li_select.classList+="animation";
+        li_select.querySelector("#show_done").classList+="task_done";
+         
+        no_of_task_done(); 
+        show_task_no_cmplted();
+        if(show_congratuation){
+            done_audio.play();
+            setTimeout(() => {
+                showCongratulation(element);     
+            }, 300);
+        }
     }
     
     // document.getElementById(li_select.id).style.opacity=0.4;
     // Get the index of the done task
-    var index;
+    var index=null;
     for(var i=0;i<select_ul.length;i++){
         if(li_select==select_ul[i]){
             index=i;
@@ -91,9 +110,13 @@ function dash_the_task(element,show_congratuation=true){
             localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_list));
         }
         else{
-            today_task_list=JSON.parse(localStorage.getItem("Today_Task_List"));
-            today_task_list[index].task_done=1;
-            localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
+            if(index!=null){
+                today_task_list=JSON.parse(localStorage.getItem("Today_Task_List"));
+                // console.log(today_task_list);
+                today_task_list[index].task_done=1;
+                localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
+                
+            }           
         }
     }  
     
@@ -141,13 +164,13 @@ function tick_the_task(input_box) {
 
 
 function Check_The_task_done() {
-    var Tomorrow_tasks=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
+    // var Tomorrow_tasks=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
     var Today_tasks=JSON.parse(localStorage.getItem("Today_Task_List"));
 
     // console.log("Tommorrow_tasks are ",Tomorrow_tasks);
     // console.log("Todays_tasks are ",Today_tasks);
 
-    for(i in Today_tasks){
+    for(var i=0;i<Today_tasks.length;i++){
         // console.log("The task no is ",i);
         if(Today_tasks[i].task_done==1){
             var li_list=document.querySelectorAll("#todays_works li");
@@ -162,30 +185,39 @@ function Check_The_task_done() {
         }
     };
 
-    for(i in Tomorrow_tasks){
-        if(Tomorrow_tasks[i].task_done==1){
-            var li_list=document.querySelectorAll("#tomorrows_works li");
-            var input_box=li_list[i].querySelector("#task");
-            tick_the_task(input_box);
-            dash_the_task(li_list[i],false);
-        }
-        else{
-            var li_list=document.querySelectorAll("#tomorrows_works li");
-            var input_box=li_list[i].querySelector("#task");
-            input_box.checked=false;
-        }
-    }  ;  
+    // for(i in Tomorrow_tasks){
+    //     if(Tomorrow_tasks[i].task_done==1){
+    //         var li_list=document.querySelectorAll("#tomorrows_works li");
+    //         var input_box=li_list[i].querySelector("#task");
+    //         tick_the_task(input_box);
+    //         dash_the_task(li_list[i],false);
+    //     }
+    //     else{
+    //         var li_list=document.querySelectorAll("#tomorrows_works li");
+    //         var input_box=li_list[i].querySelector("#task");
+    //         input_box.checked=false;
+    //     }
+    // }  ;  
 }
 
 
-
-function show_task_added(){
+function show_task_added(del=false){
     var Tomorrow_tasks=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
     var Today_tasks=JSON.parse(localStorage.getItem("Today_Task_List"));
-    var i;
+    // console.log(Today_tasks);
+    if(del){
+        document.querySelector("#tomorrows_works").innerHTML="<div class='lock'>\
+        <img src='./assests/lock.png' alt='' srcset='' width='200'/>\
+        <h5>Unlock Tommorrow</h5>\
+    </div>";
+    }    
+    document.querySelector("#todays_works").innerHTML="";
+    var i=0;
     for(i in Today_tasks ){
         add_task("#todays_works",Today_tasks[i].task_name,Today_tasks[i].time_alloted);
     };
+    // console.log(i);
+    i=0
     for(i in Tomorrow_tasks){
         add_task("#tomorrows_works",Tomorrow_tasks[i].task_name,Tomorrow_tasks[i].time_alloted);          
     };
@@ -195,6 +227,7 @@ function show_task_added(){
 function add_task(day,task) {
     var li_box=document.querySelector(`${day}`);
     li_box.innerHTML+=('beforeend','<li onclick="dash_the_task(this);">\
+    <div id="show_done" class="">Done!</div>\
     <span class="cheeck_container">\
         <input type="checkbox" name="task" id="task" value="done" "/>\
         <span class="done_checkmark"></span>\
@@ -206,6 +239,7 @@ function add_task(day,task) {
 
 
 function show_task() {
+    // console.log(document.querySelector("#task_enter").value);
     // var today_work_li=document.querySelector("#today_works");
     var User_En_Task=document.querySelector("#task_enter").value;
     // var User_En_Time=document.querySelector("#time_").value;
@@ -245,24 +279,24 @@ function show_task() {
 
 
 function delete_task(element){
-    // console.log("In delete");
+    show_delete_pop_up();
+
     // document.getElementById().disabled = true;
     var parent_ele=element.parentElement;
     var ul_id="#"+parent_ele.parentElement.id;
     var select_ul=document.querySelectorAll(`${ul_id}`+" li");
     let li_select=parent_ele;
+    li_select.querySelector("input").disabled=true;
     // document.getElementById(li_select.id).style.opacity=0.4;
     // Get the index of the done task
     var index=0;
     
-    document.getElementById("todays_works").innerHTML=" ";
-    document.getElementById("tomorrows_works").innerHTML=" ";
+    // document.getElementById("todays_works").innerHTML=" ";
 
     var temp_today=JSON.parse(localStorage.getItem("Today_Task_List"));
-    var temp_tom=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
+    // var temp_tom=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
 
     var today_task_after_del=[];
-    var tom_task_after_del=[];
 
 
     if(ul_id=="#todays_works"){
@@ -275,50 +309,9 @@ function delete_task(element){
             }
         }
         localStorage.setItem("Today_Task_List",JSON.stringify(today_task_after_del));
-        show_task_added();
-    }
-    else{
-        for(var i=0;i<select_ul.length;i++){
-            if(li_select==select_ul[i]){
-                continue;
-            }
-            else{
-                tom_task_after_del.push(temp_tom[i]);
-            }
-
-        } 
-        localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tom_task_after_del));       
-        show_task_added();
+        show_task_added(true);
     }
     Check_The_task_done();
-    
-
-
-
-    // if(ul_id=="#tomorrows_works"){
-    //     var tomorrow_task_li=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
-    //     if(index==0){
-    //         tomorrow_task_li.shift();
-    //     }
-    //     else{
-    //         tomorrow_task_li.splice(index,index);
-            console.log(tomorrow_task_list);
-    //     }
-    //     localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tomorrow_task_li));
-    //     // show_task_added();
-    // }
-    // else{
-    //     var today_task_li=JSON.parse(localStorage.getItem("Today_Task_List"));
-    //     if(index==0){
-    //         today_task_li.shift();
-    //     }
-    //     else{
-    //         today_task_li.splice(index,index);
-            console.log(today_task_li);
-    //     }        
-    //     localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
-    //     // show_task_added();
-    // }
     
 }
 
@@ -341,10 +334,65 @@ function show_form(btn,text,ele) {
         // btn.style.color="white";
     }
 }
+var menu=document.getElementById("nav_items");
+
+function show_menu(params) {
+     // Move the nav right by 0%
+     menu.style.display="flex";
+     window.onscroll = () => { window.scroll(0, 0); };
+     setTimeout(() => {
+         menu.style.right="0%";
+        }, 100);
+    
+       
+}
+function close_menu(params) {
+    // Move the nav right by 0%
+    menu.style.right="-100%";
+    window.onscroll = () => { };
+    setTimeout(() => {
+        menu.style.display="none";
+    }, 200);
+}
+
+// Update 1.2
+// Updated selection of award while adding task
+
+function update_task_completed(params) {
+    var no_of_task_completed=document.querySelectorAll("input[type='checkbox']:checked").length;
+    localStorage.setItem("task_completed",JSON.stringify(no_of_task_completed));
+}
+
+
+function no_of_task_done() {
+    if(localStorage.getItem("task_completed")==null){
+        update_task_completed();
+    }
+    else{
+        update_task_completed();
+    }
+}
+
+function show_task_no_cmplted() {
+    tasks_p.innerText=JSON.parse(localStorage.getItem("task_completed"));
+}
+
+function show_delete_pop_up() {
+    del_popup.style.opacity="1";
+    setTimeout(() => {
+        del_popup.style.opacity="0";
+    }, 500);
+}
+
+
+// End
 
 // localStorage.removeItem("Today_Task_List");
 // localStorage.removeItem("Tomorrow_Task_List");
 local_storage_create();
 set_date_("#todays_date","#tomorrows_date");
 Check_The_task_done();
-
+no_of_task_done();
+show_task_no_cmplted();
+// delete_task(document.querySelector("li"));
+// show_rewards_option();
