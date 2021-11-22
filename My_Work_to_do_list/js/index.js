@@ -19,7 +19,7 @@ if(localStorage.getItem("rewards")!=null){
 
 var api="https://api.giphy.com/v1/gifs/random?";
 var apikey="api_key=0UTRbFtkMxAplrohufYco5IY74U8hOes";
-var tag="&tag=fails&rating=pg-13";
+var tag="&tag=quotes&rating=pg-13";
 
 
 function Get(yourUrl){
@@ -77,23 +77,24 @@ function dash_the_task(element,show_congratuation=true){
         input_chk_box.disabled=true;
         var task_name=li_select.querySelector("#task_name");
         // task_name.style.color="rgba(0, 0, 0, 0.2) !important";
+        li_select.querySelector("#show_done").classList+="task_done";
         task_name.classList.toggle("dashed");
         li_select.classList+="animation";
-        li_select.querySelector("#show_done").classList+="task_done";
+        
          
         no_of_task_done(); 
         show_task_no_cmplted();
         if(show_congratuation){
+            done_audio.play();
             setTimeout(() => {
-                done_audio.play();
-                showCongratulation(element);     
-            }, 500);
+                showCongratulation(element);                
+            }, 400);
         }
     }
     
     // document.getElementById(li_select.id).style.opacity=0.4;
     // Get the index of the done task
-    var index=null;
+    var index;
     for(var i=0;i<select_ul.length;i++){
         if(li_select==select_ul[i]){
             index=i;
@@ -150,10 +151,29 @@ function check_date_change() {
         localStorage.setItem("Date",JSON.stringify(date));
         var todays_works=localStorage.getItem("Tomorrow_Task_List");
         localStorage.setItem("Today_Task_List",todays_works);
-        localStorage.setItem("Tomorrow_Task_List",JSON.stringify([]))
+        if(localStorage.getItem("cmn_task")!=null){
+            var cmn_tasks=localStorage.getItem("cmn_task");
+            localStorage.setItem("Tomorrow_Task_List",cmn_tasks);
+        }
+        else{
+            localStorage.setItem("Tomorrow_Task_List","[]");
+        }
         // show_task_added();
     }
 }
+
+// function test(params) {
+//     var todays_works=localStorage.getItem("Tomorrow_Task_List");
+//         console.log(todays_works);
+//         localStorage.setItem("Today_Task_List",todays_works);
+//         if(localStorage.getItem("cmn_task")!=null){
+//             var cmn_tasks=JSON.parse(localStorage.getItem("cmn_task"));
+//             localStorage.setItem("Tomorrow_Task_List",JSON.stringify(cmn_tasks));
+//         }
+//         else{
+//             localStorage.setItem("Tomorrow_Task_List","[]");
+//         }
+// }
 
 // Function for ticking the input
 function tick_the_task(input_box) {
@@ -261,6 +281,7 @@ function show_task() {
         tomorrow_task_list.push(task);
     }
     else{
+        console.log(today_task_list);
         today_task_list.push(task);
     }
     localStorage.setItem("Today_Task_List",JSON.stringify(today_task_list));
@@ -294,10 +315,10 @@ function delete_task(element){
     // document.getElementById("todays_works").innerHTML=" ";
 
     var temp_today=JSON.parse(localStorage.getItem("Today_Task_List"));
-    // var temp_tom=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
+    var temp_tom=JSON.parse(localStorage.getItem("Tomorrow_Task_List"));
 
     var today_task_after_del=[];
-
+    var tom_task_after_del=[];
 
     if(ul_id=="#todays_works"){
         for(var i=0;i<select_ul.length;i++){
@@ -310,8 +331,20 @@ function delete_task(element){
         }
         localStorage.setItem("Today_Task_List",JSON.stringify(today_task_after_del));
         show_task_added(true);
+        Check_The_task_done();
     }
-    Check_The_task_done();
+    else{
+        for(var i=0;i<select_ul.length;i++){
+            if(li_select==select_ul[i]){
+                continue;
+            }
+            else{
+                tom_task_after_del.push(temp_tom[i]);
+            }
+        }
+        localStorage.setItem("Tomorrow_Task_List",JSON.stringify(tom_task_after_del));
+        show_task_added(true);
+    }
     
 }
 
@@ -336,23 +369,25 @@ function show_form(btn,text,ele) {
 }
 var menu=document.getElementById("nav_items");
 
-function show_menu(params) {
+function show_menu(hamburger_) {
+
+    const hamburger=document.querySelector(hamburger_);
+    hamburger.classList.toggle('open');
      // Move the nav right by 0%
-     menu.style.display="flex";
-     window.onscroll = () => { window.scroll(0, 0); };
-     setTimeout(() => {
-         menu.style.right="0%";
-        }, 100);
-    
-       
-}
-function close_menu(params) {
-    // Move the nav right by 0%
-    menu.style.right="-100%";
-    window.onscroll = () => { };
-    setTimeout(() => {
-        menu.style.display="none";
-    }, 200);
+     if(hamburger.classList.contains('open')){
+         menu.style.display="flex";
+        //  window.onscroll = () => { window.scroll(0, 0); };
+         setTimeout(() => {
+             menu.style.right="0%";
+            }, 100);
+     }
+    else{
+        menu.style.right="-100%";
+        // window.onscroll = () => { };
+        setTimeout(() => {
+            menu.style.display="none";
+        }, 200);   
+    }
 }
 
 // Update 1.2
@@ -379,20 +414,114 @@ function show_task_no_cmplted() {
 
 function show_delete_pop_up() {
     del_popup.style.opacity="1";
+    del_popup.style.zIndex="31";
     setTimeout(() => {
         del_popup.style.opacity="0";
+        del_popup.style.zIndex="-1";
     }, 500);
 }
 
 
 // End
 
+// Update To add common tasks for everday
+// Problem:----Tired of adding repetitive adding of task everyday
+// Solution
+function show_info(ele,hidden_info) {
+    const info=ele.querySelector(hidden_info);
+    info.classList.toggle('show');
+}
+// Function to show cmn task editor
+function show_cmn_t_edit(cmn_t_edit){
+    var cmn_t=document.querySelector(cmn_t_edit);
+    cmn_t.classList.toggle('flex');
+}
+
+
+// Function for storing and displaying common tasks
+var cmn_task_display=document.getElementById("cmn_task_display");
+function show_cmn_task(){
+    cmn_task_display.innerHTML="";
+    if (localStorage.getItem("cmn_task")==null) {
+        localStorage.setItem("cmn_task","[]"); 
+     }
+    else{
+        var cmn_tasks_stored=JSON.parse(localStorage.getItem("cmn_task"));
+        cmn_tasks_stored.forEach(task => {
+           cmn_task_display.innerHTML+=`
+           <li>${task.task_name} <button onclick="del_cmn_task(this)">Remove</button> </li>
+           `;
+       });
+    }
+}
+
+
+// Function for displaying entered data
+function update_cmn_task(cmn_task) {
+    cmn_task_display.innerHTML+=`
+    <li>${cmn_task} <button onclick="del_cmn_task(this)">Remove</button> </li>
+    `;
+}
+
+// function for adding common task
+function add_cmn_task(params) {
+    var cmn_task_entered=document.querySelector("#cmn_task_i").value;
+    var cmn_task={
+        task_name: cmn_task_entered,
+        task_done: 0
+    };
+    if (localStorage.getItem("cmn_task")==null) {
+       localStorage.setItem("cmn_task","[]"); 
+    }
+    var cmn_tasks_stored=JSON.parse(localStorage.getItem("cmn_task"));
+    cmn_tasks_stored.push(cmn_task);
+    localStorage.setItem("cmn_task",JSON.stringify(cmn_tasks_stored));
+    update_cmn_task(cmn_task_entered);
+    document.querySelector("#cmn_task_i").value="";
+}
+// Function for finding the index
+function index_of(arr,sel) {
+    for (let i = 0; i < arr.length; i++) {
+        if(arr[i]==sel){
+            return i;
+        }      
+    }
+}
+
+
+// Function to remove cmn tasks
+function del_cmn_task(btn) {
+    var sel_task=btn.parentElement;
+    var cmn_tasks_stored=JSON.parse(localStorage.getItem("cmn_task"));
+    var all_cmn_tasks=cmn_task_display.querySelectorAll("li");
+    var rem_index=index_of(all_cmn_tasks,sel_task);
+    var cmn_task_after_del=[];
+    for(var i=0;i<cmn_tasks_stored.length;i++){
+        if(i==rem_index){
+            continue;
+        }
+        else{
+            cmn_task_after_del.push(cmn_tasks_stored[i]);
+
+        }
+    }
+    console.log(rem_index);
+    localStorage.setItem("cmn_task",JSON.stringify(cmn_task_after_del));
+    show_cmn_task(true);
+}
+
+// 
+
+
 // localStorage.removeItem("Today_Task_List");
 // localStorage.removeItem("Tomorrow_Task_List");
+// test();
 local_storage_create();
 set_date_("#todays_date","#tomorrows_date");
 Check_The_task_done();
 no_of_task_done();
 show_task_no_cmplted();
+show_cmn_task();
 // delete_task(document.querySelector("li"));
 // show_rewards_option();
+// localStorage.setItem("Today_Task_List",'[]')

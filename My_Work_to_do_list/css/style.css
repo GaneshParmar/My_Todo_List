@@ -21,7 +21,12 @@
 .hide{
     display: none !important;
 }
-
+.show{
+    display: block !important;
+}
+.flex{
+    display: flex !important;
+}
 /* Delete pop up */
 .delete_popup{
     position: fixed;
@@ -33,9 +38,8 @@
     align-items: center;
     background-color: rgb(34, 34, 34);
     opacity: 0;
-    pointer-events: none;
     transition: opacity 0.5s ease;
-    z-index: 31;
+    z-index: -1;
 }
 .delete_popup>div>h1{
     text-align: center;
@@ -44,6 +48,132 @@
 }
 /*  */
 
+/* Comn task btn */
+#cmn_task{
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    color: black;
+    z-index: 40;
+    background-color: white;
+    border-radius: 50%;
+    /* padding: 1% 2%; */
+}
+#cmn_task>img{
+    animation: bouncing 2s infinite forwards;
+}
+#cmn_task>.info_hidden{
+    display: none;
+    position: absolute;
+    top: -300px;
+    width: calc(100vw/1.5);
+    height: calc(100vw/2);
+    left: calc(-140vw/2);
+    border: 1px solid gray;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px 10px;
+    box-shadow: 1px 1px 10px gray;
+    /* width: 500px; */
+    /* left: 10px; */
+}
+#cmn_task>.info_hidden>.info{
+    color: gray;
+    text-align: center;
+    font-size: 1.2em;
+}
+#cmn_task>.info_hidden>.btn{
+    display: block;
+    padding: 7px 10px;
+    text-align: center;
+    outline: none;
+    border: none;
+    background-color: #49FF00;
+    color: white;
+    font-family: 'Bitter',sans-serif;
+    margin: 50px auto;
+    border-radius: 4px;
+    font-size: 1.1em;
+}
+#cmn_task>.info_hidden>.close_icon{
+    display: block;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    border-radius: 25%;
+    background-color: #ff412f;
+    color: white;
+    font-family: monospace;
+    padding: 3px;
+}
+
+
+.cmn_task_editor{
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    display: none;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    z-index: 40;
+    padding-top: 20px;
+}
+.cmn_task_editor>label{
+    font-size: 1em;
+    font-family: 'Baloo Bhai';
+    text-align: center;
+}
+.cmn_task_editor>input{
+    margin-top: 10px;
+    width: 80%;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+.cmn_task_editor>button{
+    padding: 5px 50px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background-color: #268cf2;
+    color: white;
+    margin-top: 10px;
+    font-size: 1.3em;
+}
+.cmn_task_editor>.close{
+    position: fixed;
+    background-color: rgba(255, 0, 0, 0.719);
+    bottom: 50px;
+    z-index: 10;
+}
+.cmn_task_editor>.close:hover{
+    background-color: red;
+}
+.cmn_task_editor>h4{
+    margin-top: 3px;
+    width: 100%;
+    background-color: #49FF00;
+    color: white;
+    text-align: center;
+    font-size: 1.2em;
+    padding: 10px 0px;
+}
+.cmn_tasks_show{
+    overflow: auto;
+}
+.cmn_tasks_show>li>button{
+    background-color: #ff512f;
+    color: white;
+    font-weight: 500;
+    font-family: 'Poppins';
+    outline: none;
+    border: none;
+    padding: 1px 5px;
+}
+/*  */
 #blurr_bg,#congrats_greeter>.blurr_bg{
     display: none;
     position: absolute;
@@ -52,6 +182,9 @@
     background-color: rgba(255, 255, 255, 0.445);
     backdrop-filter: blur(5px);
     z-index: 2;
+}
+#blurr_bg{
+    background-color: rgba(255, 255, 255, 0.685);
 }
 #congrats_greeter>.blurr_bg{
     top: -200px;
@@ -182,24 +315,84 @@ nav>h1{
 nav>.hamburger{
     position: absolute;
     right: 20px;
+    /* background-color: black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
 }
-.nav_items>.close{
+nav>.hamburger>.hamburger_part{
+    display: block;
+    width: 65%;
+    background-color: rgba(0, 0, 0, 0.822);
+    border-radius: 5px;
+    height: 5px;
+    transition: all 0.4s ease-out;
+}
+nav>.hamburger>.hamburger_part::before,nav>.hamburger>.hamburger_part::after{
+    position: relative;
+    content: "";
+    height: 100%;
+    width: 100%;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.774);
+    border-radius: 4px;
+    transition: all 0.4s ease-in-out;
+}
+nav>.hamburger>.hamburger_part::before{
+    transform: translate(0px,-10px)
+    /* transform-origin: left; */
+}
+nav>.hamburger>.hamburger_part::after{
+    transform: translate(0px,6px);
+    /* transform-origin: left; */
+}
+
+/* After clicking hamburger animation */
+nav>.hamburger>.hamburger_part.open{
+    transform: translateX(-35px);
+    background: transparent;
+}
+/* nav>.hamburger>.open::before,nav>.hamburger>.open::after{
+    transform: translateX(35px);
+}  */
+/* nav>.hamburger>.open::before{
+    width: 100%;
+    transform: translate(35px,-12px) rotateZ(45deg);
+}
+nav>.hamburger>.open::after{
+    width: 100%;
+    transform: translate(35px,12px) rotateZ(-45deg);
+} */
+
+nav>.hamburger>.open::before{
+    width: 100%;
+    transform: translate(35px,0px) rotateZ(45deg);
+}
+nav>.hamburger>.open::after{
+    width: 100%;
+    transform: translate(35px,-5px) rotateZ(-45deg);
+}
+
+/*  */
+/* .nav_items>.close{
     display: flex;
     justify-content: space-around;
     align-items:center;
     padding: 10px;
-}
-.nav_items>.close>img:nth-last-child(1){
+} */
+/* .nav_items>.close>img:nth-last-child(1){
     position: absolute;
     right: 15px;
-}
+} */
 .nav_items{
     display: none;
     flex-direction: column;
-    position: fixed;
-    top: 0;
+    position: absolute;
+    top: 47px;
     right: -100%;
-    width: 90%;
+    width: 100%;
     height: 100vh;
     z-index: 20;
     background-color: white;
@@ -277,7 +470,7 @@ nav>.hamburger{
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background-color: #ffea008e;
+    background: transparent;
     font-family: 'Bitter', serif;
     /* font-family: 'Roboto'; */
     font-size: 1.4em;
@@ -553,8 +746,8 @@ ul>li>.task_done{
 
 #add_task{
     display: block;
-    position: absolute;
-    top: 30%;
+    position: fixed;
+    top: 50%;
     transform: translateY(-50%);
     min-width: 98%;
     min-height: 50%;
@@ -627,6 +820,7 @@ ul>li>.task_done{
 
 @media (min-width:700px) {
     .container{
+        position: relative;
         display: flex;
         flex-direction: row;
     }
@@ -641,8 +835,19 @@ ul>li>.task_done{
     hr{
         display: none;
     }
+    #cmn_task>.info_hidden{
+        top: -500px;
+    }
+    #cmn_task>.info_hidden>.info{
+        margin-top: 100px;
+    }
 }
-
+@media (min-width:900px){
+    #cmn_task>.info_hidden{
+        width: calc(100vw/1.5);
+        height: 20vw;
+    }
+}
 
 
 /* End  */
@@ -726,6 +931,19 @@ ul>li>.task_done{
         border-right: 2px solid #5fa9e0;
     }
 }
+
+@keyframes bouncing {
+    0%{
+        transform: translateY(0px);
+    }
+    50%{
+        transform: translateY(4px);
+    }
+    100%{
+        transform: translateY(0px);
+    }
+}
+
 
 /* @media (max-width:700px) {
     #add_task>.add_task_container{
