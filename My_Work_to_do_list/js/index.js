@@ -19,7 +19,7 @@ if(localStorage.getItem("rewards")!=null){
 
 var api="https://api.giphy.com/v1/gifs/random?";
 var apikey="api_key=0UTRbFtkMxAplrohufYco5IY74U8hOes";
-var tag="&tag=quotes&rating=pg-13";
+var tag="&tag=fails&rating=pg-13";
 
 
 function Get(yourUrl){
