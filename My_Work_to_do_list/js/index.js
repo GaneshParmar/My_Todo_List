@@ -19,7 +19,7 @@ if(localStorage.getItem("rewards")!=null){
 
 var api="https://api.giphy.com/v1/gifs/random?";
 var apikey="api_key=0UTRbFtkMxAplrohufYco5IY74U8hOes";
-var tag="&tag=fails&rating=pg-13";
+var tag="&tag=quotes&rating=pg-13";
 
 
 function Get(yourUrl){
@@ -64,7 +64,7 @@ function dash_the_task(element,show_congratuation=true){
     // var input_checkmark=element.id;
     // element.disabled=true;
     // document.getElementById().disabled = true;
-    let li_select=element;
+    let li_select=element.parentElement;
     // var parent_ele=element.parentElement.parentElement;
     var ul_id="#todays_works";
     // console.log(ul_id);
@@ -196,7 +196,7 @@ function Check_The_task_done() {
             var li_list=document.querySelectorAll("#todays_works li");
             var input_box=li_list[i].querySelector("#task");
             tick_the_task(input_box);
-            dash_the_task(li_list[i],false);
+            dash_the_task(li_list[i].querySelector(".cheeck_container") ,false);
         }
         else{
             var li_list=document.querySelectorAll("#todays_works li");
@@ -246,11 +246,11 @@ function show_task_added(del=false){
 // Function for adding the task
 function add_task(day,task) {
     var li_box=document.querySelector(`${day}`);
-    li_box.innerHTML+=('beforeend','<li onclick="dash_the_task(this);">\
+    li_box.innerHTML+=('beforeend','<li>\
     <div id="show_done" class="">Done!</div>\
-    <span class="cheeck_container">\
+    <span class="cheeck_container" onclick="dash_the_task(this);">\
         <input type="checkbox" name="task" id="task" value="done" "/>\
-        <span class="done_checkmark"></span>\
+        <span class="done_checkmark" ></span>\
     </span> \
     <label  id="task_name" class="">'+`${task}`+'</label>\
     <img src="https://img.icons8.com/color/48/000000/delete-forever.png" onclick="delete_task(this);" width="30" height="30"/>\
